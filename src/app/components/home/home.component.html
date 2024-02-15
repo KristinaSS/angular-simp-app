@@ -1,4 +1,8 @@
-<p>home works!</p>
-<div *ngFor="let champ of champions">
-  {{champ.name}}
+<div *ngFor="let champion of champions">
+  <p>{{ champion.name }}</p>
+  <ul>
+    <li *ngFor="let skin of champion.skins">
+      <div> {{ skin.name }}</div>
+    </li>
+  </ul>
 </div>
