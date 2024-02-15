@@ -1,8 +1,13 @@
-<div *ngFor="let champion of champions">
+<h1>Special Skins You Can't get with RP</h1>
+<div *ngFor="let champion of getChampionsWithSpecialSkins()">
   <p>{{ champion.name }}</p>
-  <ul>
-    <li *ngFor="let skin of champion.skins">
-      <div> {{ skin.name }}</div>
-    </li>
-  </ul>
+  <ng-container *ngIf="getSpecialSkins(champion).length > 0">
+    <ul>
+      <li *ngFor="let skin of getSpecialSkins(champion)">
+        {{ skin.name }}
+        <br/>
+        <img [src]="skin.tilePath" alt="skin_tile">
+      </li>
+    </ul>
+  </ng-container>
 </div>

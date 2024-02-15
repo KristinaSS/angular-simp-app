@@ -1,0 +1,10 @@
+{
+  "/riot": {
+    "target": "https://cdn.merakianalytics.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/riot": "/riot"
+    }
+  }
+}

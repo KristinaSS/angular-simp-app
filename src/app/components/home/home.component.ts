@@ -8,7 +8,7 @@ import {Skin} from "../../models/skin";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   champions: Champion[] = [];
 
 
@@ -16,15 +16,24 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.lolService.getAllChampions().subscribe((data) => {
-      this.champions = Object.values(data);
+    this.lolService.getChampionsAndSkins().subscribe(
+      (data: Champion[]) => {
+        this.champions = Object.values(data);
+      },
+      (error) => {
+        console.error('Error fetching champions and skins:', error);
+      }
+    );
 
-      // For each champion, fetch its skins
-      this.champions.forEach(champion => {
-        this.lolService.getChampionSkins(champion.name).subscribe((skins: Skin[]) => {
-          champion.skins = skins;
-        });
-      });
-    });
   }
+  getChampionsWithSpecialSkins(): any[] {
+    return this.champions.filter(champion =>
+      champion.skins.some(skin => skin.cost === 'Special' && skin.lootEligible)
+    );
+  }
+
+  getSpecialSkins(champion: Champion): Skin[] {
+    return champion.skins.filter(skin => skin.cost === 'Special');
+  }
+
 }
