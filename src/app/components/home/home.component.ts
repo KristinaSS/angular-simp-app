@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   // @ts-ignore
   @ViewChild('box', {static: true}) box: ElementRef;
 
-  constructor(private lolService: LolService, private renderer: Renderer2) {
+  constructor(private lolService: LolService) {
   }
 
   ngOnInit(): void {
