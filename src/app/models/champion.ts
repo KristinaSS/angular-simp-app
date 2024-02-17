@@ -7,4 +7,5 @@ export interface Champion {
   icon: string;
   releaseDate: string;
   skins: Skin[];
+  showOtherSkins: boolean;
 }

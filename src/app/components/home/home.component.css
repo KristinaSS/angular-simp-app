@@ -21,3 +21,10 @@
   top: 0;
   height: 600px;
 }
+
+.grayed-out {
+  filter: grayscale(100%) blur(5px);
+}
+
+
+

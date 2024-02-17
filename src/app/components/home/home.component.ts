@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
   champions: Champion[] = [];
   columns: number = 1;
   hoveredIndex: number | null = null;
+  hoveredChampion: string = '-1';
+  clickedNum: number = 0;
 
   // @ts-ignore
   @ViewChild('box', {static: true}) box: ElementRef;
@@ -42,20 +44,20 @@ export class HomeComponent implements OnInit {
       return champion.skins.filter(skin => skin.cost === 'Special');
     }*/
 
-  setHoveredIndex(index: number | null, skins: Skin[]) {
+  setHoveredIndex(index: number | null, skins: Skin[], champ: string) {
     this.hoveredIndex = index;
     if (index !== null) {
+      this.hoveredChampion = champ;
       const lastColumnIndex = Math.floor(skins.length / this.columns) * this.columns - 1;
       skins.forEach((skin, i) => {
-        if(index == 0){
+        if (index == 0) {
           skin.cols = 3;
-        }else {
+        } else {
           skin.cols = i === index ? skin.isBase ? 3 : 3 : 1;
           skin.isLastColumn = i === lastColumnIndex;
         }
       });
     } else {
-      console.log("leave");
       this.resetCols(skins);
     }
   }
@@ -76,16 +78,27 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   private resetCols(tiles: Skin[]) {
     tiles.forEach(skin => {
-      if(skin.isBase){
+      if (skin.isBase) {
         skin.cols = 3;
-      } else{
+      } else {
         skin.cols = 1;
       }
       skin.isLastColumn = false;
     });
+  }
+
+  toggleOtherSkins(champion: Champion) {
+    if (champion) {
+      champion.showOtherSkins = !champion.showOtherSkins;
+
+      if(champion.showOtherSkins){
+        this.clickedNum++;
+      }else {
+        this.clickedNum--;
+      }
+    }
   }
 }
 
