@@ -1,13 +1,21 @@
-<h1>Special Skins You Can't get with RP</h1>
-<div *ngFor="let champion of getChampionsWithSpecialSkins()">
-  <p>{{ champion.name }}</p>
-  <ng-container *ngIf="getSpecialSkins(champion).length > 0">
-    <ul>
-      <li *ngFor="let skin of getSpecialSkins(champion)">
+<h1>All Lol skins</h1>
+<div id="box" #box>
+  <div *ngFor="let champion of champions">
+    <p>{{ champion.name }}</p>
+    <mat-grid-list [cols]="columns" rowHeight="300px">
+      <mat-grid-tile *ngFor="let skin of champion.skins; let i = index"
+                     (mouseenter)="setHoveredIndex(i, champion.skins)"
+                     (mouseleave)="setHoveredIndex(null, champion.skins)"
+                     [colspan]="skin.cols == undefined ? 1 : skin.cols"
+                     [class.disable-transition-last-column]="isLastColumn(i, champion.skins)">
         {{ skin.name }}
         <br/>
-        <img [src]="skin.tilePath" alt="skin_tile">
-      </li>
-    </ul>
-  </ng-container>
+        <img [src]="skin.loadScreenPath" alt="skin_tile">
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>
+
+
+
+

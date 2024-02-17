@@ -17,4 +17,6 @@ export interface Skin {
   tilePath: string;
   loadScreenPath: string;
   loadScreenVintagePath: string;
+  cols: number;
+  isLastColumn?: boolean; // Make isLastColumn optional
 }

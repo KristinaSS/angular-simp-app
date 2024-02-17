@@ -5,6 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './components/home/home.component';
 import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

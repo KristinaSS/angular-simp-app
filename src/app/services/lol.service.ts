@@ -7,13 +7,13 @@ import {Champion} from "../models/champion";
   providedIn: 'root'
 })
 export class LolService {
-  private champsWithsSkinsURL = '/riot/lol/resources/latest/en-US/champions.json';
+  private champsWithsSkinsURLs = 'https://my-reverse-proxy.krisagriza.workers.dev/';
 
   constructor(private http: HttpClient) {
   }
 
   getChampionsAndSkins(): Observable<Champion[]> {
-    return this.http.get<any>(this.champsWithsSkinsURL).pipe(
+    return this.http.get<any>(this.champsWithsSkinsURLs).pipe(
       tap(data => console.log('Champ API Response:', data)),
       catchError(error => {
         console.error('Error fetching champs and skins:', error);

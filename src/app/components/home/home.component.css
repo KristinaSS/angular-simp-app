@@ -1,0 +1,12 @@
+.mat-grid-tile {
+  transition: background-color 0.3s ease, width 0.3s ease, left 0.3s ease; /* Add background-color to the transition property */
+  background-color: green;
+}
+
+.disable-transition-last-column {
+  transition: none !important;
+}
+
+.mat-grid-tile:hover {
+  background-color: lightpink;
+}
