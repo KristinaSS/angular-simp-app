@@ -10,3 +10,14 @@
 .mat-grid-tile:hover {
   background-color: lightpink;
 }
+
+.skin_tile {
+  overflow: hidden;
+  object-fit: cover; /* You can remove this line if you want the image to maintain its original size */
+  object-position: center top;
+  background-color: #301717;
+
+  position: absolute;
+  top: 0;
+  height: 600px;
+}
