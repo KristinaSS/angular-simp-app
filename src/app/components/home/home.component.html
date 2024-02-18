@@ -1,21 +1,27 @@
-<h1>All Lol skins</h1>
-<div id="box" #box>
-  <mat-grid-list [cols]="columns" rowHeight="300px">
-    <ng-container *ngFor="let champion of champions">
-      <div (click)="toggleOtherSkins(champion)">
-        <ng-container *ngFor="let skin of champion.skins; let i = index">
-          <mat-grid-tile
-            *ngIf="skin.isBase || champion.showOtherSkins"
-            (mouseover)="setHoveredIndex(i, champion.skins, champion.id)"
-            (mouseleave)="setHoveredIndex(null, champion.skins, champion.id)"
-            [colspan]="skin.cols == undefined ? skin.isBase ? 3 : 1 : skin.cols">
-            <div class="skin_tile">
-              <img [src]="skin.tilePath" alt="skin_tile"
-                   [class.grayed-out]="!champion.showOtherSkins && clickedNum > 0">
-            </div>
-          </mat-grid-tile>
-        </ng-container>
-      </div>
-    </ng-container>
-  </mat-grid-list>
+<div class="box-wrapper">
+  <div class="title-content">
+    <h1>All Lol skins</h1>
+  </div>
+</div>
+<div class="box-wrapper">
+  <div id="box" #box>
+    <mat-grid-list [cols]="columns" rowHeight="300px">
+      <ng-container *ngFor="let champion of champions">
+        <div (click)="toggleOtherSkins(champion)">
+          <ng-container *ngFor="let skin of champion.skins; let i = index">
+            <mat-grid-tile
+              *ngIf="skin.isBase || champion.showOtherSkins"
+              (mouseover)="setHoveredIndex(i, champion.skins, champion.id)"
+              (mouseleave)="setHoveredIndex(null, champion.skins, champion.id)"
+              [colspan]="skin.cols == undefined ? skin.isBase ? 3 : 1 : skin.cols">
+              <div class="skin_tile">
+                <img [src]="skin.tilePath" alt="skin_tile"
+                     [class.grayed-out]="!champion.showOtherSkins && clickedNum > 0">
+              </div>
+            </mat-grid-tile>
+          </ng-container>
+        </div>
+      </ng-container>
+    </mat-grid-list>
+  </div>
 </div>

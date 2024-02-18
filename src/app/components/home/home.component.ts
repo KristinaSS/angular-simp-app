@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LolService} from "../../services/lol.service";
 import {Champion} from "../../models/champion";
 import {Skin} from "../../models/skin";
@@ -34,15 +34,17 @@ export class HomeComponent implements OnInit {
     this.setColumns();
   }
 
-  /*  getChampionsWithSpecialSkins(): any[] {
-      return this.champions.filter(champion =>
-        champion.skins.some(skin => skin.cost === 'Special' && skin.lootEligible)
-      );
-    }
+  toggleOtherSkins(champion: Champion) {
+    if (champion) {
+      champion.showOtherSkins = !champion.showOtherSkins;
 
-    getSpecialSkins(champion: Champion): Skin[] {
-      return champion.skins.filter(skin => skin.cost === 'Special');
-    }*/
+      if (champion.showOtherSkins) {
+        this.clickedNum++;
+      } else {
+        this.clickedNum--;
+      }
+    }
+  }
 
   setHoveredIndex(index: number | null, skins: Skin[], champ: string) {
     this.hoveredIndex = index;
@@ -68,8 +70,8 @@ export class HomeComponent implements OnInit {
   }
 
   private setColumns() {
-    const boxWidth = this.box.nativeElement.clientWidth;
-    this.columns = Math.floor(boxWidth / 100); // Set columns based on box width
+    let boxWidth = this.box.nativeElement.clientWidth;
+    this.columns = Math.floor(boxWidth / 100);
   }
 
   private setColsInSkinsToOne() {
@@ -89,16 +91,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  toggleOtherSkins(champion: Champion) {
-    if (champion) {
-      champion.showOtherSkins = !champion.showOtherSkins;
-
-      if(champion.showOtherSkins){
-        this.clickedNum++;
-      }else {
-        this.clickedNum--;
-      }
-    }
+  /*  getChampionsWithSpecialSkins(): any[] {
+    return this.champions.filter(champion =>
+      champion.skins.some(skin => skin.cost === 'Special' && skin.lootEligible)
+    );
   }
+
+  getSpecialSkins(champion: Champion): Skin[] {
+    return champion.skins.filter(skin => skin.cost === 'Special');
+  }*/
 }
 

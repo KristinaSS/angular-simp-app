@@ -1,5 +1,5 @@
 .mat-grid-tile {
-  transition: background-color 0.3s ease, width 0.3s ease, left 0.3s ease; /* Add background-color to the transition property */
+  transition: background-color 0.3s ease, width 0.3s ease, left 0.3s ease;
   background-color: green;
 }
 
@@ -13,7 +13,7 @@
 
 .skin_tile {
   overflow: hidden;
-  object-fit: cover; /* You can remove this line if you want the image to maintain its original size */
+  object-fit: cover;
   object-position: center top;
   background-color: #301717;
 
@@ -26,5 +26,15 @@
   filter: grayscale(100%) blur(5px);
 }
 
+#box {
+  max-width: 1500px;
+  flex: 1;
+}
+
+.box-wrapper{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
 
 
