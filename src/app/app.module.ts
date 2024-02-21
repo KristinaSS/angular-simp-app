@@ -5,9 +5,13 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './components/home/home.component';
 import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
-import { MatGridListModule } from '@angular/material/grid-list';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
+  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     HomeComponent
@@ -17,10 +21,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
     AppRoutingModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: []
 })
 export class AppModule {
 }

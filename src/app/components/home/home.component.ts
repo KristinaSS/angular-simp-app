@@ -1,7 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {LolService} from "../../services/lol.service";
 import {Champion} from "../../models/champion";
 import {Skin} from "../../models/skin";
+import {AccountService} from "../../services/account.service";
+import {Account} from "../../models/account";
+import {SkinDetails} from "../../models/skin-details";
 
 @Component({
   selector: 'app-home',
@@ -14,25 +17,39 @@ export class HomeComponent implements OnInit {
   hoveredIndex: number | null = null;
   hoveredChampion: string = '-1';
   clickedNum: number = 0;
+  totalSkins: number = 0;
+  // @ts-ignore
+  account: Account;
+  accountSkinsOwned: number = 0;
+  isLoading: boolean = true;
 
   // @ts-ignore
   @ViewChild('box', {static: true}) box: ElementRef;
 
-  constructor(private lolService: LolService) {
+  constructor(private lolService: LolService,
+              private accountService: AccountService) {
   }
 
   ngOnInit(): void {
-    this.lolService.getChampionsAndSkins().subscribe(
-      (data: Champion[]) => {
-        this.champions = Object.values(data);
-      },
-      (error) => {
-        console.error('Error fetching champions and skins:', error);
-      }
-    );
-    this.setColsInSkinsToOne();
-    this.setColumns();
+    this.isLoading = true;
+    setTimeout(() => {
+      this.lolService.getChampionsAndSkins().subscribe(
+        (data: Champion[]) => {
+          this.account = this.accountService.getAccount();
+          this.getAccountSkinNumber();
+          this.champions = Object.values(data);
+          this.setColsInSkinsToOne();
+          this.setColumns();
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error('Error fetching champions and skins:', error);
+          this.isLoading = false;
+        }
+      );
+    }, 1500);
   }
+
 
   toggleOtherSkins(champion: Champion) {
     if (champion) {
@@ -76,6 +93,7 @@ export class HomeComponent implements OnInit {
 
   private setColsInSkinsToOne() {
     this.champions.forEach(champion => {
+      this.totalSkins = this.totalSkins + (champion.skins.length-1);
       this.resetCols(champion.skins);
     });
   }
@@ -86,19 +104,45 @@ export class HomeComponent implements OnInit {
         skin.cols = 3;
       } else {
         skin.cols = 1;
+        skin.skinDetails = this.getSkinDetails(skin.id);
+        console.log( skin.name + " out " + skin.skinDetails?.isOwned);
       }
       skin.isLastColumn = false;
     });
   }
 
-  /*  getChampionsWithSpecialSkins(): any[] {
-    return this.champions.filter(champion =>
-      champion.skins.some(skin => skin.cost === 'Special' && skin.lootEligible)
-    );
-  }
+  private getAccountSkinNumber() {
+    this.account.skins.forEach(skin => {
+      if(skin.isOwned){
+        ++this.accountSkinsOwned;
+      }
 
-  getSpecialSkins(champion: Champion): Skin[] {
-    return champion.skins.filter(skin => skin.cost === 'Special');
-  }*/
+    });
+  }
+  private getSkinDetails(id: string): SkinDetails | undefined {
+    console.log("Entering getSkinDetails function");
+    console.log("Searching for skin with ID: " + id);
+
+    // Log the number of skins in the account
+    console.log("Number of skins in account: " + this.account.skins.length);
+
+    // Loop through each skin in the account to find the one with the specified ID
+    const foundSkin = this.account.skins.find(skin => {
+      console.log("Checking skin with ID: " + skin.id);
+      return skin.id == id;
+    });
+
+    // Log whether the skin was found or not
+    if (foundSkin) {
+      console.log("Skin with ID " + id + " found.");
+    } else {
+      console.log("Skin with ID " + id + " not found.");
+    }
+
+    console.log("Exiting getSkinDetails function");
+
+    // Return the found skin or undefined if not found
+    return foundSkin;
+  }
 }
 

@@ -1,8 +1,15 @@
-<div class="box-wrapper">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<div class="box-wrapper box-center">
+  <div *ngIf="isLoading" class="loader"></div>
+</div>
+<div  *ngIf="!isLoading" class="box-wrapper"> <!-- Hide content while loading -->
   <div class="title-content">
-    <h1>All Lol skins</h1>
+    <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
+    <br>
+    <h2>Account: id: {{account.id}}</h2>
   </div>
 </div>
+
 <div class="box-wrapper">
   <div id="box" #box>
     <mat-grid-list [cols]="columns" rowHeight="300px">
@@ -17,6 +24,14 @@
               <div class="skin_tile">
                 <img [src]="skin.tilePath" alt="skin_tile"
                      [class.grayed-out]="!champion.showOtherSkins && clickedNum > 0">
+                <div class="icon-container" *ngIf="skin.cols==3 && !skin.isBase">
+                  <i class="fa-regular fa-eye"></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned" class="fa-solid fa-plus"></i>
+                  <i *ngIf="skin.skinDetails?.isOwned" class="fa-solid fa-check"></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned && !skin.skinDetails?.isLiked"
+                     class="fa-regular fa-heart icon"></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned && skin.skinDetails?.isLiked" class="fa-solid fa-heart icon"></i>
+                </div>
               </div>
             </mat-grid-tile>
           </ng-container>

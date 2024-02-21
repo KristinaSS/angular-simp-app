@@ -1,4 +1,5 @@
 import {Chroma} from "./chroma";
+import {SkinDetails} from "./skin-details";
 
 export interface Skin {
   id: string;
@@ -18,5 +19,7 @@ export interface Skin {
   loadScreenPath: string;
   loadScreenVintagePath: string;
   cols: number;
-  isLastColumn?: boolean; // Make isLastColumn optional
+  isLastColumn?: boolean;
+
+  skinDetails?: SkinDetails;
 }
