@@ -9,12 +9,14 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { ChampGridComponent } from './components/champ-grid/champ-grid.component';
 
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    ChampGridComponent,
   ],
   imports: [
     BrowserModule,

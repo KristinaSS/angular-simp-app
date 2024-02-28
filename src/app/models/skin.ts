@@ -20,6 +20,7 @@ export interface Skin {
   loadScreenVintagePath: string;
   cols: number;
   isLastColumn?: boolean;
+  show?: boolean;
 
   skinDetails?: SkinDetails;
 }

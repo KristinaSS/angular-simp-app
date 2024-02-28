@@ -16,11 +16,11 @@
       <ng-container *ngFor="let champion of champions">
         <div (click)="toggleOtherSkins(champion)">
           <ng-container *ngFor="let skin of champion.skins; let i = index">
-            <mat-grid-tile
-              *ngIf="skin.isBase || champion.showOtherSkins"
-              (mouseover)="setHoveredIndex(i, champion.skins, champion.id)"
-              (mouseleave)="setHoveredIndex(null, champion.skins, champion.id)"
-              [colspan]="skin.cols == undefined ? skin.isBase ? 3 : 1 : skin.cols">
+            <mat-grid-tile #tiles class="mat-grid-tile" [@tileTransition]="transitionState"
+                           *ngIf="skin.isBase || champion.showOtherSkins"
+                           (mouseover)="setHoveredIndex(i, champion.skins, champion.id)"
+                           (mouseleave)="setHoveredIndex(null, champion.skins, champion.id)"
+                           [colspan]="skin.cols">
               <div class="skin_tile">
                 <img [src]="skin.tilePath" alt="skin_tile"
                      [class.grayed-out]="!champion.showOtherSkins && clickedNum > 0">
