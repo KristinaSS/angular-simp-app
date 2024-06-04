@@ -1,13 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  QueryList,
-  Renderer2,
-  ViewChild,
-  ViewChildren
-} from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {LolService} from "../../services/lol.service";
 
 import {Champion} from "../../models/champion";
@@ -87,11 +78,13 @@ export class HomeComponent implements OnInit {
       );
     }, 1500);
   }
+
   toggleOtherSkins(champion: Champion, i: number) {
     if (champion && i == 0) {
       champion.showOtherSkins = !champion.showOtherSkins;
 
-      if(champion){}
+      if (champion) {
+      }
 
       if (champion.showOtherSkins) {
         this.clickedNum++;
@@ -100,6 +93,7 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+
   setHoveredIndex(index: number | null, skins: Skin[], champ: string) {
     this.hoveredIndex = index;
     if (index !== null) {
@@ -113,16 +107,19 @@ export class HomeComponent implements OnInit {
       this.resetCols(skins);
     }
   }
+
   private setColumns() {
     let boxWidth = this.box.nativeElement.clientWidth;
     this.columns = Math.floor(boxWidth / 100);
   }
+
   private setColsInSkinsToOne() {
     this.champions.forEach(champion => {
       this.totalSkins = this.totalSkins + (champion.skins.length - 1);
       this.resetCols(champion.skins);
     });
   }
+
   private resetCols(tiles: Skin[]) {
     tiles.forEach(skin => {
       if (skin.isBase) {
@@ -134,6 +131,7 @@ export class HomeComponent implements OnInit {
       skin.isLastColumn = false;
     });
   }
+
   private getAccountSkinNumber() {
     this.account.skins.forEach(skin => {
       if (skin.isOwned) {
@@ -142,6 +140,7 @@ export class HomeComponent implements OnInit {
 
     });
   }
+
   private getSkinDetails(id: string): SkinDetails | undefined {
     return this.account.skins.find(skin => skin.id === id);
   }

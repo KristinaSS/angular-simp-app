@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Account} from "../models/account";
 
 @Injectable({
@@ -6,7 +6,8 @@ import {Account} from "../models/account";
 })
 export class AccountService {
 
-  constructor() { }
+  constructor() {
+  }
 
   getAccount(): Account {
     return {
