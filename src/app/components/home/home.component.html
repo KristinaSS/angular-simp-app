@@ -2,7 +2,7 @@
 <div class="box-wrapper box-center">
   <div *ngIf="isLoading" class="loader"></div>
 </div>
-<div  *ngIf="!isLoading" class="box-wrapper"> <!-- Hide content while loading -->
+<div *ngIf="!isLoading" class="box-wrapper"> <!-- Hide content while loading -->
   <div class="title-content">
     <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
     <br>
@@ -14,8 +14,8 @@
   <div id="box" #box>
     <mat-grid-list [cols]="columns" rowHeight="300px">
       <ng-container *ngFor="let champion of champions">
-        <div (click)="toggleOtherSkins(champion)">
-          <ng-container *ngFor="let skin of champion.skins; let i = index">
+        <ng-container *ngFor="let skin of champion.skins; let i = index">
+          <div (click)="toggleOtherSkins(champion, i)">
             <mat-grid-tile #tiles class="mat-grid-tile" [@tileTransition]="transitionState"
                            *ngIf="skin.isBase || champion.showOtherSkins"
                            (mouseover)="setHoveredIndex(i, champion.skins, champion.id)"
@@ -34,8 +34,8 @@
                 </div>
               </div>
             </mat-grid-tile>
-          </ng-container>
-        </div>
+          </div>
+        </ng-container>
       </ng-container>
     </mat-grid-list>
   </div>

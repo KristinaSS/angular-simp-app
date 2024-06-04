@@ -47,14 +47,13 @@ let viewChildren = ViewChildren('tiles');
     ])
   ]
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
   champions: Champion[] = [];
   columns: number = 1;
   hoveredIndex: number | null = null;
   hoveredChampion: string = '-1';
   clickedNum: number = 0;
   totalSkins: number = 0;
-  // @ts-ignore
   account: Account;
   accountSkinsOwned: number = 0;
   isLoading: boolean = true;
@@ -66,8 +65,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @viewChildren tiles: QueryList<ElementRef>;
 
   constructor(private lolService: LolService,
-              private accountService: AccountService,
-              private renderer: Renderer2) {
+              private accountService: AccountService) {
+    this.account = this.accountService.getAccount();
   }
 
   ngOnInit(): void {
@@ -75,7 +74,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.lolService.getChampionsAndSkins().subscribe(
         (data: Champion[]) => {
-          this.account = this.accountService.getAccount();
           this.getAccountSkinNumber();
           this.champions = Object.values(data);
           this.setColsInSkinsToOne();
@@ -89,18 +87,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       );
     }, 1500);
   }
-
-  ngAfterViewInit() {
-    this.tiles.forEach(tile => {
-      tile.nativeElement.addEventListener('transitionend', () => {
-        this.renderer.setStyle(tile.nativeElement, 'z-index', '1');
-      });
-    });
-  }
-
-  toggleOtherSkins(champion: Champion) {
-    if (champion) {
+  toggleOtherSkins(champion: Champion, i: number) {
+    if (champion && i == 0) {
       champion.showOtherSkins = !champion.showOtherSkins;
+
+      if(champion){}
 
       if (champion.showOtherSkins) {
         this.clickedNum++;
@@ -109,7 +100,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
   setHoveredIndex(index: number | null, skins: Skin[], champ: string) {
     this.hoveredIndex = index;
     if (index !== null) {
@@ -123,19 +113,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.resetCols(skins);
     }
   }
-
   private setColumns() {
     let boxWidth = this.box.nativeElement.clientWidth;
     this.columns = Math.floor(boxWidth / 100);
   }
-
   private setColsInSkinsToOne() {
     this.champions.forEach(champion => {
       this.totalSkins = this.totalSkins + (champion.skins.length - 1);
       this.resetCols(champion.skins);
     });
   }
-
   private resetCols(tiles: Skin[]) {
     tiles.forEach(skin => {
       if (skin.isBase) {
@@ -147,7 +134,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       skin.isLastColumn = false;
     });
   }
-
   private getAccountSkinNumber() {
     this.account.skins.forEach(skin => {
       if (skin.isOwned) {
@@ -156,7 +142,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     });
   }
-
   private getSkinDetails(id: string): SkinDetails | undefined {
     return this.account.skins.find(skin => skin.id === id);
   }
