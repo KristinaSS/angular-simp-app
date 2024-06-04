@@ -14,12 +14,12 @@ export class AccountService {
       id: "1",
       skins: [
         {
-          id: "81003",
+          id: "81003", //frostes ezreal
           isOwned: true,
           isLiked: true,
         },
         {
-          id: "145048",
+          id: "145048", //inkshadow kaisa
           isOwned: true,
           isLiked: true,
         },
@@ -54,23 +54,23 @@ export class AccountService {
           isLiked: true,
         },
         {
-          id: "266001",
+          id: "266001",//justicar aatrox
           isOwned: true,
           isLiked: true,
         },
         // Wanted
         {
-          id: "1005",
+          id: "1005", //frostfire annie
           isOwned: false,
           isLiked: true,
         },
         {
-          id: "67055",
+          id: "67055", //dragonmancer vayne
           isOwned: false,
           isLiked: true,
         },
         {
-          id: "15050",
+          id: "15050", //mythmaker sivir
           isOwned: false,
           isLiked: true,
         },
@@ -80,7 +80,7 @@ export class AccountService {
           isLiked: true,
         },
         {
-          id: "222003",
+          id: "222003",//zombie jinx
           isOwned: false,
           isLiked: true,
         },

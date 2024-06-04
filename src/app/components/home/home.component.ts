@@ -142,6 +142,6 @@ export class HomeComponent implements OnInit {
   }
 
   private getSkinDetails(id: string): SkinDetails | undefined {
-    return this.account.skins.find(skin => skin.id === id);
+    return this.account.skins.find(skin => skin.id == id);
   }
 }
