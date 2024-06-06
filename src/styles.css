@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+.flex-display{
+  display: flex;
+}
+
+.grayed-out {
+  filter: grayscale(100%) blur(5px);
+}
+
+.flex-direction_column {
+  flex-direction: column;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.align-content-center {
+  align-content: center;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}

@@ -1,8 +1,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<div class="box-wrapper box-center">
-  <div *ngIf="isLoading" class="loader"></div>
+<div class="align-content-center justify-content-center position-absolute box-center flex-display">
+  <div *ngIf="isLoading">
+    <app-loader></app-loader>
+  </div>
 </div>
-<div *ngIf="!isLoading" class="box-wrapper"> <!-- Hide content while loading -->
+<div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display"> <!-- Hide content while loading -->
   <div class="title-content">
     <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
     <br>
@@ -10,7 +12,7 @@
   </div>
 </div>
 
-<div class="box-wrapper">
+<div class="align-content-center justify-content-center flex-display">
   <div id="box" #box>
     <mat-grid-list [cols]="columns" rowHeight="300px">
       <ng-container *ngFor="let champion of champions">
@@ -21,10 +23,10 @@
                            (mouseover)="setHoveredIndex(i, champion.skins, champion.id)"
                            (mouseleave)="setHoveredIndex(null, champion.skins, champion.id)"
                            [colspan]="skin.cols">
-              <div class="skin_tile">
+              <div class="skin_tile position-absolute">
                 <img [src]="skin.tilePath" alt="skin_tile"
                      [class.grayed-out]="!champion.showOtherSkins && clickedNum > 0">
-                <div class="icon-container" *ngIf="skin.cols==3 && !skin.isBase">
+                <div class="icon-container justify-content-center flex-display position-absolute" *ngIf="skin.cols==3 && !skin.isBase">
                   <i class="fa-regular fa-eye"></i>
                   <i *ngIf="!skin.skinDetails?.isOwned" class="fa-solid fa-plus"></i>
                   <i *ngIf="skin.skinDetails?.isOwned" class="fa-solid fa-check"></i>

@@ -10,6 +10,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { ChampGridComponent } from './components/champ-grid/champ-grid.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -17,6 +18,7 @@ import { ChampGridComponent } from './components/champ-grid/champ-grid.component
     AppComponent,
     HomeComponent,
     ChampGridComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
