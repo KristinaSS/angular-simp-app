@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
   hoveredChampion: string = '-1';
   clickedNum: number = 0;
   totalSkins: number = 0;
-  account: Account;
+  account: Account | undefined;
   accountSkinsOwned: number = 0;
   isLoading: boolean = true;
   transitionState: string = '';
@@ -57,7 +57,14 @@ export class HomeComponent implements OnInit {
 
   constructor(private lolService: LolService,
               private accountService: AccountService) {
-    this.account = this.accountService.getAccount();
+    this.accountService.getAccount('9a98e46d-145a-4900-b36b-0e3e01ffd4d9').subscribe(
+      (result) => {
+        this.account = result;
+      },
+      error => {
+        console.error('Error fetching article:', error);
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -133,15 +140,19 @@ export class HomeComponent implements OnInit {
   }
 
   private getAccountSkinNumber() {
-    this.account.skins.forEach(skin => {
-      if (skin.isOwned) {
-        ++this.accountSkinsOwned;
-      }
-
-    });
+    if (this.account != undefined) {
+      this.account.skins.forEach(skin => {
+        if (skin.isOwned) {
+          ++this.accountSkinsOwned;
+        }
+      });
+    }
   }
 
   private getSkinDetails(id: string): SkinDetails | undefined {
-    return this.account.skins.find(skin => skin.id == id);
+    if (this.account != undefined) {
+      return this.account.skins.find(skin => skin.id == id);
+    }
+    return undefined;
   }
 }
