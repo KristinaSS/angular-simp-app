@@ -218,12 +218,14 @@ export class HomeComponent implements OnInit {
       isOwned ?
         this.accountService.ownSkin(this.account.id, skinId).subscribe(
           () => {
+            ++this.accountSkinsOwned;
           },
           (error) => {
             console.error('Error owning:', error)
           }) :
         this.accountService.disOwnSkin(this.account.id, skinId).subscribe(
           () => {
+            --this.accountSkinsOwned;
           },
           (error) => {
             console.error('Error disowning:', error)
