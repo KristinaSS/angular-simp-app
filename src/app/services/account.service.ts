@@ -19,23 +19,31 @@ export class AccountService {
   }
 
   likeSkin(accId: string, skinId: string) {
-    return this.http.post<Account>('/server/skin/like',
+    return this.http.post<void>('/server/skin/like',
       {accId, skinId},
       {}
     );
   }
 
   ownSkin(accId: string, skinId: string) {
-    return this.http.post<Account>('/server/skin/own',
+    return this.http.post<void>('/server/skin/own',
       {accId, skinId},
       {}
     );
   }
 
-  unLikeSkin(id: any, skinId: string) {
+  unLikeSkin(accId: any, skinId: string) {
+    return this.http.post<void>('/server/skin/unlike',
+      {accId, skinId},
+      {}
+    );
   }
 
-  disOwnSkin(id: string, skinId: string) {
+  disOwnSkin(accId: string, skinId: string) {
+    return this.http.post<void>('/server/skin/disOwn',
+      {accId, skinId},
+      {}
+    );
   }
 
   /*  getAccount(): Account {

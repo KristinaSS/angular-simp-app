@@ -192,16 +192,32 @@ export class HomeComponent implements OnInit {
   private callLiked(isLiked: boolean, skinId: string) {
     if (this.account != undefined) {
       isLiked ?
-        this.accountService.likeSkin(this.account.id, skinId) :
-        this.accountService.unLikeSkin(this.account.id, skinId);
+        this.accountService.likeSkin(this.account.id, skinId).subscribe(
+          () => {},
+          (error) => {
+            console.error('Error liking:', error)
+          }) :
+        this.accountService.unLikeSkin(this.account.id, skinId).subscribe(
+          () => {},
+          (error) => {
+            console.error('Error unliking:', error)
+          });
     }
   }
 
   private callOwn(isOwned: boolean, skinId: string) {
     if (this.account != undefined) {
       isOwned ?
-        this.accountService.ownSkin(this.account.id, skinId) :
-        this.accountService.disOwnSkin(this.account.id, skinId);
+        this.accountService.ownSkin(this.account.id, skinId).subscribe(
+          () => {},
+          (error) => {
+            console.error('Error owning:', error)
+          }) :
+        this.accountService.disOwnSkin(this.account.id, skinId).subscribe(
+          () => {},
+          (error) => {
+            console.error('Error disowning:', error)
+          });
     }
   }
 }
