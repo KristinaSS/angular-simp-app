@@ -66,7 +66,6 @@ export class HomeComponent implements OnInit {
         (data: Champion[]) => {
           this.getAccountSkinNumber();
           this.champions = Object.values(data);
-          this.setSkinDetails();
           this.setColsInSkinsToOne();
           this.setColumns();
           this.isLoading = false;
@@ -80,6 +79,7 @@ export class HomeComponent implements OnInit {
     this.accountService.getAccount('9a98e46d-145a-4900-b36b-0e3e01ffd4d9').subscribe(
       (result) => {
         this.account = result;
+        this.setSkinDetails();
       },
       error => {
         console.error('Error fetching article:', error);
@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit {
         skin.cols = 3;
       } else {
         skin.cols = 1;
-        skin.skinDetails = this.getSkinDetails(skin.id);
+        skin.skinDetails = this.getSkinDetails(skin);
       }
       skin.isLastColumn = false;
     });
@@ -170,9 +170,15 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private getSkinDetails(id: string): SkinDetails | undefined {
+  private getSkinDetails(s: Skin): SkinDetails | undefined {
     if (this.account != undefined) {
-      return this.account.skins.find(skin => skin.id == id);
+      if(this.account.skins.find(skin => skin.id == s.id) != undefined){
+        return this.account.skins.find(skin => skin.id == s.id);
+      } else if (s.skinDetails == undefined ){
+        s.skinDetails = new SkinDetails(s.id, false, false);
+      } else {
+        return s.skinDetails;
+      }
     }
     return undefined;
   }
@@ -193,12 +199,14 @@ export class HomeComponent implements OnInit {
     if (this.account != undefined) {
       isLiked ?
         this.accountService.likeSkin(this.account.id, skinId).subscribe(
-          () => {},
+          () => {
+          },
           (error) => {
             console.error('Error liking:', error)
           }) :
         this.accountService.unLikeSkin(this.account.id, skinId).subscribe(
-          () => {},
+          () => {
+          },
           (error) => {
             console.error('Error unliking:', error)
           });
@@ -209,12 +217,14 @@ export class HomeComponent implements OnInit {
     if (this.account != undefined) {
       isOwned ?
         this.accountService.ownSkin(this.account.id, skinId).subscribe(
-          () => {},
+          () => {
+          },
           (error) => {
             console.error('Error owning:', error)
           }) :
         this.accountService.disOwnSkin(this.account.id, skinId).subscribe(
-          () => {},
+          () => {
+          },
           (error) => {
             console.error('Error disowning:', error)
           });
