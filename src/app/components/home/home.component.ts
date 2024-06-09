@@ -57,14 +57,6 @@ export class HomeComponent implements OnInit {
 
   constructor(private lolService: LolService,
               private accountService: AccountService) {
-    this.accountService.getAccount('9a98e46d-145a-4900-b36b-0e3e01ffd4d9').subscribe(
-      (result) => {
-        this.account = result;
-      },
-      error => {
-        console.error('Error fetching article:', error);
-      }
-    );
   }
 
   ngOnInit(): void {
@@ -74,6 +66,7 @@ export class HomeComponent implements OnInit {
         (data: Champion[]) => {
           this.getAccountSkinNumber();
           this.champions = Object.values(data);
+          this.setSkinDetails();
           this.setColsInSkinsToOne();
           this.setColumns();
           this.isLoading = false;
@@ -84,6 +77,14 @@ export class HomeComponent implements OnInit {
         }
       );
     }, 1500);
+    this.accountService.getAccount('9a98e46d-145a-4900-b36b-0e3e01ffd4d9').subscribe(
+      (result) => {
+        this.account = result;
+      },
+      error => {
+        console.error('Error fetching article:', error);
+      }
+    );
   }
 
   toggleOtherSkins(champion: Champion, i: number) {
@@ -113,6 +114,26 @@ export class HomeComponent implements OnInit {
     } else {
       this.resetCols(skins);
     }
+  }
+
+  toggleOwned(skin: Skin, event: MouseEvent) {
+    if (skin.skinDetails != undefined) {
+      skin.skinDetails.isOwned = !skin.skinDetails?.isOwned;
+      event.stopPropagation(); // Prevent the click event from bubbling up
+    } else {
+      skin.skinDetails = new SkinDetails(skin.id, true, false)
+    }
+    this.callOwn(skin.skinDetails.isOwned, skin.id);
+  }
+
+  toggleLiked(skin: Skin, event: MouseEvent) {
+    if (skin.skinDetails != undefined) {
+      skin.skinDetails.isLiked = !skin.skinDetails.isLiked;
+      event.stopPropagation(); // Prevent the click event from bubbling up
+    } else {
+      skin.skinDetails = new SkinDetails(skin.id, false, true)
+    }
+    this.callLiked(skin.skinDetails.isLiked, skin.id);
   }
 
   private setColumns() {
@@ -154,5 +175,33 @@ export class HomeComponent implements OnInit {
       return this.account.skins.find(skin => skin.id == id);
     }
     return undefined;
+  }
+
+  private setSkinDetails() {
+    if (this.champions && this.champions.length > 0) {
+      this.champions.forEach(champion => {
+        if (champion.skins && champion.skins.length > 0) {
+          champion.skins.forEach(skin => {
+            skin.skinDetails = new SkinDetails(skin.id, false, false);
+          });
+        }
+      });
+    }
+  }
+
+  private callLiked(isLiked: boolean, skinId: string) {
+    if (this.account != undefined) {
+      isLiked ?
+        this.accountService.likeSkin(this.account.id, skinId) :
+        this.accountService.unLikeSkin(this.account.id, skinId);
+    }
+  }
+
+  private callOwn(isOwned: boolean, skinId: string) {
+    if (this.account != undefined) {
+      isOwned ?
+        this.accountService.ownSkin(this.account.id, skinId) :
+        this.accountService.disOwnSkin(this.account.id, skinId);
+    }
   }
 }

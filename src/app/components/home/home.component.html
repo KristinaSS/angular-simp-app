@@ -4,7 +4,8 @@
     <app-loader></app-loader>
   </div>
 </div>
-<div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display"> <!-- Hide content while loading -->
+<div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display">
+  <!-- Hide content while loading -->
   <div class="title-content">
     <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
     <br>
@@ -26,13 +27,17 @@
               <div class="skin_tile position-absolute">
                 <img [src]="skin.tilePath" alt="skin_tile"
                      [class.grayed-out]="!champion.showOtherSkins && clickedNum > 0">
-                <div class="icon-container justify-content-center flex-display position-absolute" *ngIf="skin.cols==3 && !skin.isBase">
+                <div class="icon-container justify-content-center flex-display position-absolute"
+                     *ngIf="skin.cols==3 && !skin.isBase">
                   <i class="fa-regular fa-eye"></i>
-                  <i *ngIf="!skin.skinDetails?.isOwned" class="fa-solid fa-plus"></i>
-                  <i *ngIf="skin.skinDetails?.isOwned" class="fa-solid fa-check"></i>
-                  <i *ngIf="!skin.skinDetails?.isOwned && !skin.skinDetails?.isLiked"
-                     class="fa-regular fa-heart icon"></i>
-                  <i *ngIf="!skin.skinDetails?.isOwned && skin.skinDetails?.isLiked" class="fa-solid fa-heart icon"></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned" class="fa-solid fa-plus"
+                     (click)="toggleOwned(skin, $event)"></i>
+                  <i *ngIf="skin.skinDetails?.isOwned" class="fa-solid fa-check"
+                     (click)="toggleOwned(skin, $event)"></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned && !skin.skinDetails?.isLiked" class="fa-regular fa-heart icon"
+                     (click)="toggleLiked(skin, $event)"></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned && skin.skinDetails?.isLiked" class="fa-solid fa-heart icon"
+                     (click)="toggleLiked(skin, $event)"></i>
                 </div>
               </div>
             </mat-grid-tile>
