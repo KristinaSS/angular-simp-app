@@ -14,6 +14,8 @@ import { LoaderComponent } from './components/loader/loader.component';
 import {TooltipModule} from "ngx-bootstrap/tooltip";
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ViewSkinDialogComponent } from './components/view-skin-dialog/view-skin-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -22,6 +24,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HomeComponent,
     ChampGridComponent,
     LoaderComponent,
+    ViewSkinDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     BrowserAnimationsModule,
     TooltipModule.forRoot(),
     MatTooltipModule,
+    MatDialogModule,
   ],
   providers: [
     provideAnimationsAsync()

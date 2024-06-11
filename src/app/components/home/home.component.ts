@@ -7,6 +7,8 @@ import {AccountService} from "../../services/account.service";
 import {Account} from "../../models/account";
 import {SkinDetails} from "../../models/skin-details";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {MatDialog} from "@angular/material/dialog";
+import {ViewSkinDialogComponent} from "../view-skin-dialog/view-skin-dialog.component";
 
 let viewChildren = ViewChildren('tiles');
 
@@ -56,7 +58,8 @@ export class HomeComponent implements OnInit {
   @viewChildren tiles: QueryList<ElementRef>;
 
   constructor(private lolService: LolService,
-              private accountService: AccountService) {
+              private accountService: AccountService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -136,6 +139,14 @@ export class HomeComponent implements OnInit {
     this.callLiked(skin.skinDetails.isLiked, skin.id);
   }
 
+  openDialog(skin: Skin): void {
+    this.dialog.open(ViewSkinDialogComponent, {
+      width: '1280 px',
+      height: '720 px',
+      data: skin
+    });
+  }
+
   private setColumns() {
     let boxWidth = this.box.nativeElement.clientWidth;
     this.columns = Math.floor(boxWidth / 100);
@@ -172,9 +183,9 @@ export class HomeComponent implements OnInit {
 
   private getSkinDetails(s: Skin): SkinDetails | undefined {
     if (this.account != undefined) {
-      if(this.account.skins.find(skin => skin.id == s.id) != undefined){
+      if (this.account.skins.find(skin => skin.id == s.id) != undefined) {
         return this.account.skins.find(skin => skin.id == s.id);
-      } else if (s.skinDetails == undefined ){
+      } else if (s.skinDetails == undefined) {
         s.skinDetails = new SkinDetails(s.id, false, false);
       } else {
         return s.skinDetails;

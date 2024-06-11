@@ -1,0 +1,28 @@
+.dialog-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* 80% of the viewport height */
+  width: 80vw; /* 80% of the viewport width */
+  max-height: 720px; /* Max height as defined */
+  max-width: 1280px; /* Max width as defined */
+  overflow: hidden;
+  position: fixed; /* Position it fixed */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset by 50% to center */
+  background-size: cover; /* Ensure background image covers the dialog area */
+  background-position: center; /* Center the background image */
+  background-color: rgba(0, 0, 0, 0.8); /* Optional: Add a background color if needed */
+  border-radius: 8px; /* Optional: Add some border-radius for better appearance */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow */
+}
+
+.dialog-content {
+  position: relative; /* Ensure content is above the background */
+  z-index: 1; /* Ensure content is above the background */
+  padding: 20px; /* Add some padding for content */
+  background: rgba(255, 255, 255, 0.8); /* Optional: Add a background color for readability */
+  border-radius: 8px; /* Match the dialog background */
+}

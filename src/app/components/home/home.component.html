@@ -32,6 +32,7 @@
                   <i class="fa-regular fa-eye"
                      matTooltip="View Skin"
                      matTooltipPosition="above"
+                     (click)="openDialog(skin)"
                   ></i>
                   <i *ngIf="!skin.skinDetails?.isOwned"
                      class="fa-solid fa-plus"
