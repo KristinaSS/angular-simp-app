@@ -3,6 +3,10 @@
   display: flex;
 }
 
+.grid-display {
+  display: grid;
+}
+
 .grayed-out {
   filter: grayscale(100%) blur(5px);
 }
@@ -11,8 +15,20 @@
   flex-direction: column;
 }
 
+.flex-direction_row {
+  flex-direction: row;
+}
+
 .justify-content-center {
   justify-content: center;
+}
+
+.justify-items-center{
+  justify-items: center;
+}
+
+.justify-items-end{
+  justify-items: end;
 }
 
 .align-content-center {
@@ -29,3 +45,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.small-image {
+  width: 50px;
+  height: 50px;
+}
+
+.mini-image {
+  width: 20px;
+  height: 20px;
+}
+
+.padding-left-5px {
+  padding-left: 5px;
+}
+.padding-all-10px {
+  padding: 10px;
+}
+.padding-all-5px {
+  padding: 5px;
+}

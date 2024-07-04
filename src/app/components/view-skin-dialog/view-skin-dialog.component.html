@@ -1,14 +1,28 @@
 <div class="dialog-background" [ngStyle]="{'background-image': 'url(' + skin.splashPath + ')'}">
+  <button class="close-button" mat-button mat-dialog-close>&times;</button>
   <div class="dialog-content">
-    <h2 mat-dialog-title>{{skin.name}}</h2>
-    <mat-dialog-content>
-      <p>{{skin.name}}</p>
-      <p>{{skin.chromas}}</p>
-      <p>{{skin.cost}}</p>
-      <p>{{skin.availability}}</p>
+    <div class="title" mat-dialog-title>{{skin.name}}</div>
+    <mat-dialog-content class="dialog-sub-content">
+      <div class="padding-all-10px justify-items-center grid-display">
+        <div class="padding-all-5px flex-display flex-direction_row">
+          <img *ngIf="skin.rarity == 'Epic'" src="assets/Epic_Skin.png" class="small-image">
+          <img *ngIf="skin.availability == 'Legacy'" src="assets/Legacy_Skin.png" class="small-image">
+          <img *ngIf="skin.rarity == 'Legendary'" src="assets/Legendary_Skin.png" class="small-image">
+          <img *ngIf="skin.rarity == 'Mythic'" src="assets/Mythical_Skin.png" class="small-image">
+        </div>
+        <p *ngIf="skin.rarity != 'NoRarity'">{{skin.rarity}} Skin</p>
+        <p *ngIf="skin.availability == 'Legacy'">{{skin.availability}} Skin</p>
+      </div>
+
+      <div class="padding-all-10px justify-items-center grid-display">
+        <img *ngIf="skin.chromas.length > 0" src="assets/chroma.png" class="small-image padding-all-5px">
+        <p *ngIf="skin.chromas.length > 0">Chromas</p>
+      </div>
+
+      <div class="padding-all-10px justify-items-center grid-display">
+        <img *ngIf="skin.cost != 'Special'" src="assets/RP_icon.png" class="small-image padding-all-5px">
+        <p *ngIf="skin.cost != 'Special'" class="padding-left-5px">{{skin.cost}}</p>
+      </div>
     </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button mat-dialog-close>Close</button>
-    </mat-dialog-actions>
   </div>
 </div>

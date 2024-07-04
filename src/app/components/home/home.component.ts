@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import {LolService} from "../../services/lol.service";
 
 import {Champion} from "../../models/champion";
@@ -59,7 +59,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private lolService: LolService,
               private accountService: AccountService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
@@ -140,11 +141,37 @@ export class HomeComponent implements OnInit {
   }
 
   openDialog(skin: Skin): void {
-    this.dialog.open(ViewSkinDialogComponent, {
+    const dialogRef = this.dialog.open(ViewSkinDialogComponent, {
       width: '1280 px',
       height: '720 px',
       data: skin
     });
+
+    dialogRef.afterOpened().subscribe(() => {
+      setTimeout(() => {
+        this.clickCenterOfDialog();
+      }, 0);
+    });
+  }
+
+  clickCenterOfDialog() {
+    const dialogContainer = document.querySelector('.mat-dialog-container');
+    if (dialogContainer) {
+      const rect = dialogContainer.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const clickEvent = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        clientX: centerX,
+        clientY: centerY
+      });
+
+      this.renderer.listen(dialogContainer, 'click', () => {});
+      dialogContainer.dispatchEvent(clickEvent);
+    }
   }
 
   private setColumns() {

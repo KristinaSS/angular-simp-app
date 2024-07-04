@@ -1,8 +1,7 @@
 .dialog-background {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  justify-items: end;
+  align-items: end;
   height: 80vh; /* 80% of the viewport height */
   width: 80vw; /* 80% of the viewport width */
   max-height: 720px; /* Max height as defined */
@@ -14,8 +13,7 @@
   transform: translate(-50%, -50%); /* Offset by 50% to center */
   background-size: cover; /* Ensure background image covers the dialog area */
   background-position: center; /* Center the background image */
-  background-color: rgba(0, 0, 0, 0.8); /* Optional: Add a background color if needed */
-  border-radius: 8px; /* Optional: Add some border-radius for better appearance */
+  border-radius: 15px; /* Optional: Add some border-radius for better appearance */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow */
 }
 
@@ -23,6 +21,40 @@
   position: relative; /* Ensure content is above the background */
   z-index: 1; /* Ensure content is above the background */
   padding: 20px; /* Add some padding for content */
-  background: rgba(255, 255, 255, 0.8); /* Optional: Add a background color for readability */
   border-radius: 8px; /* Match the dialog background */
+  display: flex;
+  flex-direction: column;
 }
+
+.dialog-sub-content {
+  display: flex;
+  flex-direction: row !important;
+  color: white;
+  align-items: end;
+}
+
+.title{
+  color: white;
+  display: grid;
+  justify-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  background: none;
+  border: none;
+  font-size: 60px;
+  font-weight: bold;
+  color: white !important; /* Change color as needed */
+  cursor: pointer;
+  outline: none;
+  box-shadow: none; /* Ensure there's no box shadow */
+  padding: 0; /* Remove any padding */
+}
+
+
