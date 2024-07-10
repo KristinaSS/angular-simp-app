@@ -99,9 +99,6 @@ export class HomeComponent implements OnInit {
     if (champion && i == 0) {
       champion.showOtherSkins = !champion.showOtherSkins;
 
-      if (champion) {
-      }
-
       if (champion.showOtherSkins) {
         this.clickedNum++;
       } else {
@@ -180,6 +177,7 @@ export class HomeComponent implements OnInit {
 
   onIsOwnedChange($event: MatChipSelectionChange) {
     this.isOwned = !this.isOwned;
+    this.filterChampionsIsOwned();
   }
 
   private setColumns() {
@@ -276,6 +274,27 @@ export class HomeComponent implements OnInit {
           (error) => {
             console.error('Error disowning:', error)
           });
+    }
+  }
+
+  private resetAllChampsToggle(){
+    this.filteredChampions.forEach(champion => {
+      champion.showOtherSkins = false;
+    })
+  }
+
+  private filterChampionsIsOwned(){
+    if (this.isOwned) {
+      this.filteredChampions = this.champions.map(champion => {
+        return {
+          ...champion,
+          skins: champion.skins.filter(skin => skin.isBase || skin.skinDetails?.isOwned)
+        };
+      }).filter(champion => champion.skins.length > 1);
+    } else {
+      this.filteredChampions = this.champions;
+      this.resetAllChampsToggle();
+      this.clickedNum = 0;
     }
   }
 }
