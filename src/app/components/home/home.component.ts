@@ -9,6 +9,7 @@ import {SkinDetails} from "../../models/skin-details";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatDialog} from "@angular/material/dialog";
 import {ViewSkinDialogComponent} from "../view-skin-dialog/view-skin-dialog.component";
+import {MatChipSelectionChange} from "@angular/material/chips";
 
 let viewChildren = ViewChildren('tiles');
 
@@ -42,6 +43,7 @@ let viewChildren = ViewChildren('tiles');
 })
 export class HomeComponent implements OnInit {
   champions: Champion[] = [];
+  filteredChampions: Champion[] = [];
   columns: number = 1;
   hoveredIndex: number | null = null;
   hoveredChampion: string = '-1';
@@ -56,6 +58,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('box', {static: true}) box: ElementRef;
   // @ts-ignore
   @viewChildren tiles: QueryList<ElementRef>;
+  isOwned: boolean = false;
 
   constructor(private lolService: LolService,
               private accountService: AccountService,
@@ -70,6 +73,7 @@ export class HomeComponent implements OnInit {
         (data: Champion[]) => {
           this.getAccountSkinNumber();
           this.champions = Object.values(data);
+          this.filteredChampions = this.champions;
           this.setColsInSkinsToOne();
           this.setColumns();
           this.isLoading = false;
@@ -174,13 +178,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  onIsOwnedChange($event: MatChipSelectionChange) {
+    this.isOwned = !this.isOwned;
+  }
+
   private setColumns() {
     let boxWidth = this.box.nativeElement.clientWidth;
     this.columns = Math.floor(boxWidth / 100);
   }
 
   private setColsInSkinsToOne() {
-    this.champions.forEach(champion => {
+    this.filteredChampions.forEach(champion => {
       this.totalSkins = this.totalSkins + (champion.skins.length - 1);
       this.resetCols(champion.skins);
     });
@@ -222,8 +230,8 @@ export class HomeComponent implements OnInit {
   }
 
   private setSkinDetails() {
-    if (this.champions && this.champions.length > 0) {
-      this.champions.forEach(champion => {
+    if (this.filteredChampions && this.filteredChampions.length > 0) {
+      this.filteredChampions.forEach(champion => {
         if (champion.skins && champion.skins.length > 0) {
           champion.skins.forEach(skin => {
             skin.skinDetails = new SkinDetails(skin.id, false, false);

@@ -10,13 +10,17 @@
     <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
     <br>
     <h2>Account: id: {{account?.id}}</h2>
+    <div class="flex-display flex-direction_row">
+      <div class="padding-all-5px">
+        <mat-chip-option [value]="isOwned" (selectionChange)="onIsOwnedChange($event)"> Owned </mat-chip-option>
+      </div>
+    </div>
   </div>
 </div>
-
 <div class="align-content-center justify-content-center flex-display">
   <div id="box" #box>
     <mat-grid-list [cols]="columns" rowHeight="300px">
-      <ng-container *ngFor="let champion of champions">
+      <ng-container *ngFor="let champion of filteredChampions">
         <ng-container *ngFor="let skin of champion.skins; let i = index">
           <div (click)="toggleOtherSkins(champion, i)">
             <mat-grid-tile #tiles class="mat-grid-tile" [@tileTransition]="transitionState"

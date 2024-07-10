@@ -16,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ViewSkinDialogComponent } from './components/view-skin-dialog/view-skin-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatChipOption} from "@angular/material/chips";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -38,6 +39,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     TooltipModule.forRoot(),
     MatTooltipModule,
     MatDialogModule,
+    MatChipOption,
   ],
   providers: [
     provideAnimationsAsync()
