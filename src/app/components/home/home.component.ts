@@ -186,6 +186,8 @@ export class HomeComponent implements OnInit {
   onChipToggle($event: MatChipSelectionChange) {
     if ($event.source.id == 'isOwned') {
       this.isOwned = !this.isOwned;
+    } else if ($event.source.id == 'isLiked') {
+      this.isLiked = !this.isLiked;
     } else if ($event.source.id == 'isLegacy') {
       this.isLegacy = !this.isLegacy;
     } else if ($event.source.id == 'isEpic') {
@@ -320,7 +322,7 @@ export class HomeComponent implements OnInit {
           const isLegendaryCondition = !this.isLegendary || (skin.isBase || skin.rarity === 'Legendary');
           const isMythicCondition = !this.isMythic || (skin.isBase || skin.rarity === 'Mythic');
           const isTranscendentCondition = !this.isTranscendent || (skin.isBase || skin.rarity === 'Transcendent');
-          const isUnavailableCondition = !this.isUnavailable || (skin.isBase || (skin.availability === 'Limited' && skin.rarity !== 'Mythic'));
+          const isUnavailableCondition = !this.isUnavailable || (skin.isBase || (skin.availability === 'Limited' && skin.rarity !== 'Mythic' && skin.rarity !== 'Transcendent'));
 
           return isOwnedCondition && isLikedCondition && isLegacyCondition && isEpicCondition && isLegendaryCondition && isMythicCondition && isUnavailableCondition && isTranscendentCondition;
         })
