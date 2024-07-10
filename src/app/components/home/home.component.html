@@ -12,7 +12,28 @@
     <h2>Account: id: {{account?.id}}</h2>
     <div class="flex-display flex-direction_row">
       <div class="padding-all-5px">
-        <mat-chip-option [value]="isOwned" (selectionChange)="onIsOwnedChange($event)"> Owned </mat-chip-option>
+        <mat-chip-option id="isOwned" [value]="isOwned" (selectionChange)="onChipToggle($event)"> Owned </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option id="isLiked" [value]="isLiked" (selectionChange)="onChipToggle($event)"> Liked </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option id="isLegacy" [value]="isLegacy" (selectionChange)="onChipToggle($event)"> Legacy </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option id="isEpic" [value]="isEpic" (selectionChange)="onChipToggle($event)"> Epic </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option id="isLegendary" [value]="isLegendary" (selectionChange)="onChipToggle($event)"> Legendary </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option id="isMythic" [value]="isMythic" (selectionChange)="onChipToggle($event)"> Mythic </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option id="isTranscendent" [value]="isTranscendent" (selectionChange)="onChipToggle($event)"> Transcendent </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option id="isUnavailable" [value]="isUnavailable" (selectionChange)="onChipToggle($event)"> Unavailable </mat-chip-option>
       </div>
     </div>
   </div>

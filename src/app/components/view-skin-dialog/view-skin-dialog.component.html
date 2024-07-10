@@ -9,6 +9,7 @@
           <img *ngIf="skin.availability == 'Legacy'" src="assets/Legacy_Skin.png" class="small-image">
           <img *ngIf="skin.rarity == 'Legendary'" src="assets/Legendary_Skin.png" class="small-image">
           <img *ngIf="skin.rarity == 'Mythic'" src="assets/Mythical_Skin.png" class="small-image">
+          <img *ngIf="skin.rarity == 'Transcendent'" src="assets/transcendent.png" class="small-image">
         </div>
         <p *ngIf="skin.rarity != 'NoRarity'">{{skin.rarity}} Skin</p>
         <p *ngIf="skin.availability == 'Legacy'">{{skin.availability}} Skin</p>

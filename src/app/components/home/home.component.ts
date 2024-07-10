@@ -59,6 +59,13 @@ export class HomeComponent implements OnInit {
   // @ts-ignore
   @viewChildren tiles: QueryList<ElementRef>;
   isOwned: boolean = false;
+  isLegacy: boolean = false;
+  isEpic: boolean = false;
+  isLegendary: boolean = false;
+  isMythic: boolean = false;
+  isUnavailable: boolean = false;
+  isLiked: boolean = false;
+  isTranscendent: boolean = false;
 
   constructor(private lolService: LolService,
               private accountService: AccountService,
@@ -170,14 +177,29 @@ export class HomeComponent implements OnInit {
         clientY: centerY
       });
 
-      this.renderer.listen(dialogContainer, 'click', () => {});
+      this.renderer.listen(dialogContainer, 'click', () => {
+      });
       dialogContainer.dispatchEvent(clickEvent);
     }
   }
 
-  onIsOwnedChange($event: MatChipSelectionChange) {
-    this.isOwned = !this.isOwned;
-    this.filterChampionsIsOwned();
+  onChipToggle($event: MatChipSelectionChange) {
+    if ($event.source.id == 'isOwned') {
+      this.isOwned = !this.isOwned;
+    } else if ($event.source.id == 'isLegacy') {
+      this.isLegacy = !this.isLegacy;
+    } else if ($event.source.id == 'isEpic') {
+      this.isEpic = !this.isEpic;
+    } else if ($event.source.id == 'isLegendary') {
+      this.isLegendary = !this.isLegendary;
+    } else if ($event.source.id == 'isMythic') {
+      this.isMythic = !this.isMythic;
+    } else if ($event.source.id == 'isTranscendent') {
+      this.isTranscendent = !this.isTranscendent;
+    } else if ($event.source.id == 'isUnavailable') {
+      this.isUnavailable = !this.isUnavailable;
+    }
+    this.filterChampions();
   }
 
   private setColumns() {
@@ -277,24 +299,33 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private resetAllChampsToggle(){
+  private resetAllChampsToggle() {
     this.filteredChampions.forEach(champion => {
       champion.showOtherSkins = false;
     })
   }
 
-  private filterChampionsIsOwned(){
-    if (this.isOwned) {
-      this.filteredChampions = this.champions.map(champion => {
-        return {
-          ...champion,
-          skins: champion.skins.filter(skin => skin.isBase || skin.skinDetails?.isOwned)
-        };
-      }).filter(champion => champion.skins.length > 1);
-    } else {
-      this.filteredChampions = this.champions;
-      this.resetAllChampsToggle();
-      this.clickedNum = 0;
-    }
+  private filterChampions() {
+    this.filteredChampions = this.champions;
+    this.resetAllChampsToggle();
+    this.clickedNum = 0;
+    this.filteredChampions = this.champions.map(champion => {
+      return {
+        ...champion,
+        skins: champion.skins.filter(skin => {
+          const isOwnedCondition = !this.isOwned || (skin.isBase || skin.skinDetails?.isOwned);
+          const isLikedCondition = !this.isLiked || (skin.isBase || skin.skinDetails?.isLiked);
+          const isLegacyCondition = !this.isLegacy || (skin.isBase || skin.availability === 'Legacy');
+          const isEpicCondition = !this.isEpic || (skin.isBase || skin.rarity === 'Epic');
+          const isLegendaryCondition = !this.isLegendary || (skin.isBase || skin.rarity === 'Legendary');
+          const isMythicCondition = !this.isMythic || (skin.isBase || skin.rarity === 'Mythic');
+          const isTranscendentCondition = !this.isTranscendent || (skin.isBase || skin.rarity === 'Transcendent');
+          const isUnavailableCondition = !this.isUnavailable || (skin.isBase || (skin.availability === 'Limited' && skin.rarity !== 'Mythic'));
+
+          return isOwnedCondition && isLikedCondition && isLegacyCondition && isEpicCondition && isLegendaryCondition && isMythicCondition && isUnavailableCondition && isTranscendentCondition;
+        })
+      };
+    }).filter(champion => champion.skins.length > 1);
   }
+
 }
