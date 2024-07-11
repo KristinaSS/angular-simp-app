@@ -52,13 +52,13 @@
         <ng-container *ngFor="let skin of champion.skins; let i = index">
           <div (click)="toggleOtherSkins(champion, i)">
             <mat-grid-tile #tiles class="mat-grid-tile" [@tileTransition]="transitionState"
-                           *ngIf="skin.isBase || champion.showOtherSkins"
+                           *ngIf="(search.length > 2) || ( skin.isBase || champion.showOtherSkins)"
                            (mouseover)="setHoveredIndex(i, champion.skins, champion.id)"
                            (mouseleave)="setHoveredIndex(null, champion.skins, champion.id)"
                            [colspan]="skin.cols">
               <div class="skin_tile position-absolute">
                 <img [src]="skin.tilePath" alt="skin_tile"
-                     [class.grayed-out]="!champion.showOtherSkins && clickedNum > 0">
+                     [class.grayed-out]="search.length < 3 && !champion.showOtherSkins && clickedNum > 0">
                 <div class="icon-container justify-content-center flex-display position-absolute"
                      *ngIf="skin.cols==3 && !skin.isBase">
                   <i class="fa-regular fa-eye"

@@ -118,6 +118,9 @@ export class HomeComponent implements OnInit {
 
   setHoveredIndex(index: number | null, skins: Skin[], champ: string) {
     this.hoveredIndex = index;
+    if(this.search.length > 2){
+      return;
+    }
     if (index !== null) {
       this.hoveredChampion = champ;
       const lastColumnIndex = Math.floor(skins.length / this.columns) * this.columns - 1;
@@ -367,12 +370,17 @@ export class HomeComponent implements OnInit {
 
     if (this.search.length > 2) {
       this.filteredChampions = this.champions.map(champion => {
-        const filteredSkins = champion.skins.filter(skin =>
-          skin.name.toLowerCase().includes(this.search.toLowerCase()) || skin.isBase
+        const filteredSkins = champion.skins.filter(skin =>{
+            if(skin.name.toLowerCase().includes(this.search.toLowerCase())){
+              skin.cols = 3;
+              return true;
+            }
+            return false;
+        }
         );
         return { ...champion, skins: filteredSkins };
       }).filter(champion => {
-        if (champion.skins.length > 1)
+        if (champion.skins.length > 0)
           return true;
         if (champion.name.toLowerCase().includes(this.search.toLowerCase())) {
           return true;
