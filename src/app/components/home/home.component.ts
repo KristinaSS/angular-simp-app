@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
   accountSkinsOwned: number = 0;
   isLoading: boolean = true;
   transitionState: string = '';
+  nameFlag: boolean = false;
 
   // @ts-ignore
   @ViewChild('box', {static: true}) box: ElementRef;
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit {
           this.setColsInSkinsToOne();
           this.setColumns();
           this.isLoading = false;
+          this.nameFlag = true;
         },
         (error) => {
           console.error('Error fetching champions and skins:', error);
@@ -116,7 +118,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  setHoveredIndex(index: number | null, skins: Skin[], champ: string) {
+  setHoveredIndex(index: number | null, skins: Skin[], champ: string, name: string) {
     this.hoveredIndex = index;
     if(this.search.length > 2){
       return;
@@ -129,7 +131,7 @@ export class HomeComponent implements OnInit {
         skin.isLastColumn = i === lastColumnIndex;
       });
     } else {
-      this.resetCols(skins);
+      this.resetCols(skins, name);
     }
   }
 
@@ -217,17 +219,20 @@ export class HomeComponent implements OnInit {
   private setColsInSkinsToOne() {
     this.filteredChampions.forEach(champion => {
       this.totalSkins = this.totalSkins + (champion.skins.length - 1);
-      this.resetCols(champion.skins);
+      this.resetCols(champion.skins, champion.name);
     });
   }
 
-  private resetCols(tiles: Skin[]) {
+  private resetCols(tiles: Skin[], champName: string) {
     tiles.forEach(skin => {
       if (skin.isBase) {
         skin.cols = 3;
       } else {
         skin.cols = 1;
         skin.skinDetails = this.getSkinDetails(skin);
+        if(!this.nameFlag){
+          skin.name = skin.name + " " + champName;
+        }
       }
       skin.isLastColumn = false;
     });
@@ -333,33 +338,6 @@ export class HomeComponent implements OnInit {
         })
       };
     }).filter(champion => champion.skins.length > 1);
-  }
-
-  filteredChampionsBySearch2() {
-    this.noResults = false;
-    this.filteredChampions = this.champions;
-    this.resetAllChampsToggle();
-    this.clickedNum = 0;
-
-    console.log("enter" + this.search + "  " + this.filteredChampions.length);
-
-    if (this.search.length > 2) {
-      this.filteredChampions = this.champions.map(champion => {
-        return {
-          ...champion,
-          skins: champion.skins.filter(skin => {
-            if (skin.name.toLowerCase().includes(this.search.toLowerCase())) {
-              console.log("enter 1 " + this.search + "  " + this.filteredChampions.length);
-              //this.noResults = false;
-              return true;
-            }
-            console.log("enter 2 " + this.search + "  " + this.filteredChampions.length);
-            //this.noResults = true;
-            return false;
-          })
-        };
-      }).filter(champion => champion.skins.length > 0);
-    }
   }
 
   filteredChampionsBySearch() {
