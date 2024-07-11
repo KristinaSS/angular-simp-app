@@ -8,6 +8,12 @@
   <!-- Hide content while loading -->
   <div class="title-content">
     <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
+    <mat-form-field>
+      <mat-label>
+        <mat-icon>search</mat-icon> Search
+      </mat-label>
+      <input matInput [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
+    </mat-form-field>
     <br>
     <h2>Account: id: {{account?.id}}</h2>
     <div class="flex-display flex-direction_row">
@@ -40,6 +46,7 @@
 </div>
 <div class="align-content-center justify-content-center flex-display">
   <div id="box" #box>
+    <div *ngIf="noResults"> No Results </div>
     <mat-grid-list [cols]="columns" rowHeight="300px">
       <ng-container *ngFor="let champion of filteredChampions">
         <ng-container *ngFor="let skin of champion.skins; let i = index">

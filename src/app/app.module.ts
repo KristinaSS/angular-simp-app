@@ -17,6 +17,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ViewSkinDialogComponent } from './components/view-skin-dialog/view-skin-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatChipOption} from "@angular/material/chips";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatIcon} from "@angular/material/icon";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -40,6 +44,12 @@ import {MatChipOption} from "@angular/material/chips";
     MatTooltipModule,
     MatDialogModule,
     MatChipOption,
+    MatFormField,
+    MatInput,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIcon,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync()

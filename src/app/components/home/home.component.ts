@@ -66,6 +66,8 @@ export class HomeComponent implements OnInit {
   isUnavailable: boolean = false;
   isLiked: boolean = false;
   isTranscendent: boolean = false;
+  search: string = '';
+  noResults: boolean = false;
 
   constructor(private lolService: LolService,
               private accountService: AccountService,
@@ -330,4 +332,59 @@ export class HomeComponent implements OnInit {
     }).filter(champion => champion.skins.length > 1);
   }
 
+  filteredChampionsBySearch2() {
+    this.noResults = false;
+    this.filteredChampions = this.champions;
+    this.resetAllChampsToggle();
+    this.clickedNum = 0;
+
+    console.log("enter" + this.search + "  " + this.filteredChampions.length);
+
+    if (this.search.length > 2) {
+      this.filteredChampions = this.champions.map(champion => {
+        return {
+          ...champion,
+          skins: champion.skins.filter(skin => {
+            if (skin.name.toLowerCase().includes(this.search.toLowerCase())) {
+              console.log("enter 1 " + this.search + "  " + this.filteredChampions.length);
+              //this.noResults = false;
+              return true;
+            }
+            console.log("enter 2 " + this.search + "  " + this.filteredChampions.length);
+            //this.noResults = true;
+            return false;
+          })
+        };
+      }).filter(champion => champion.skins.length > 0);
+    }
+  }
+
+  filteredChampionsBySearch() {
+    this.noResults = false;
+    this.filteredChampions = this.champions;
+    this.resetAllChampsToggle();
+    this.clickedNum = 0;
+
+    if (this.search.length > 2) {
+      this.filteredChampions = this.champions.map(champion => {
+        const filteredSkins = champion.skins.filter(skin =>
+          skin.name.toLowerCase().includes(this.search.toLowerCase()) || skin.isBase
+        );
+        return { ...champion, skins: filteredSkins };
+      }).filter(champion => {
+        if (champion.skins.length > 1)
+          return true;
+        if (champion.name.toLowerCase().includes(this.search.toLowerCase())) {
+          return true;
+        }
+        return false;
+      });
+
+      if (this.filteredChampions.length === 0) {
+        this.noResults = true;
+      }
+    }
+
+    console.log("enter " + this.search + "  " + this.filteredChampions.length);
+  }
 }
