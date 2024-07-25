@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit {
   isTranscendent: boolean = false;
   search: string = '';
   noResults: boolean = false;
+  disableSearch: boolean = false;
 
   constructor(private lolService: LolService,
               private accountService: AccountService,
@@ -208,6 +209,12 @@ export class HomeComponent implements OnInit {
     } else if ($event.source.id == 'isUnavailable') {
       this.isUnavailable = !this.isUnavailable;
     }
+    if(this.isOwned || this.isLiked || this.isLegacy || this.isEpic || this.isLegendary || this.isMythic || this.isTranscendent || this.isUnavailable){
+      this.disableSearch = true;
+    } else {
+      this.disableSearch = false;
+    }
+
     this.filterChampions();
   }
 
@@ -370,7 +377,5 @@ export class HomeComponent implements OnInit {
         this.noResults = true;
       }
     }
-
-    console.log("enter " + this.search + "  " + this.filteredChampions.length);
   }
 }

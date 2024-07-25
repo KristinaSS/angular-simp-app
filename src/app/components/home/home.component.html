@@ -12,34 +12,34 @@
       <mat-label>
         <mat-icon>search</mat-icon> Search
       </mat-label>
-      <input matInput [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
+      <input matInput [disabled] = "disableSearch" [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
     </mat-form-field>
     <br>
     <h2>Account: id: {{account?.id}}</h2>
     <div class="flex-display flex-direction_row">
       <div class="padding-all-5px">
-        <mat-chip-option id="isOwned" [value]="isOwned" (selectionChange)="onChipToggle($event)"> Owned </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isOwned" [value]="isOwned" (selectionChange)="onChipToggle($event)"> Owned </mat-chip-option>
       </div>
       <div class="padding-all-5px">
-        <mat-chip-option id="isLiked" [value]="isLiked" (selectionChange)="onChipToggle($event)"> Liked </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isLiked" [value]="isLiked" (selectionChange)="onChipToggle($event)"> Liked </mat-chip-option>
       </div>
       <div class="padding-all-5px">
-        <mat-chip-option id="isLegacy" [value]="isLegacy" (selectionChange)="onChipToggle($event)"> Legacy </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isLegacy" [value]="isLegacy" (selectionChange)="onChipToggle($event)"> Legacy </mat-chip-option>
       </div>
       <div class="padding-all-5px">
-        <mat-chip-option id="isEpic" [value]="isEpic" (selectionChange)="onChipToggle($event)"> Epic </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isEpic" [value]="isEpic" (selectionChange)="onChipToggle($event)"> Epic </mat-chip-option>
       </div>
       <div class="padding-all-5px">
-        <mat-chip-option id="isLegendary" [value]="isLegendary" (selectionChange)="onChipToggle($event)"> Legendary </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isLegendary" [value]="isLegendary" (selectionChange)="onChipToggle($event)"> Legendary </mat-chip-option>
       </div>
       <div class="padding-all-5px">
-        <mat-chip-option id="isMythic" [value]="isMythic" (selectionChange)="onChipToggle($event)"> Mythic </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isMythic" [value]="isMythic" (selectionChange)="onChipToggle($event)"> Mythic </mat-chip-option>
       </div>
       <div class="padding-all-5px">
-        <mat-chip-option id="isTranscendent" [value]="isTranscendent" (selectionChange)="onChipToggle($event)"> Transcendent </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isTranscendent" [value]="isTranscendent" (selectionChange)="onChipToggle($event)"> Transcendent </mat-chip-option>
       </div>
       <div class="padding-all-5px">
-        <mat-chip-option id="isUnavailable" [value]="isUnavailable" (selectionChange)="onChipToggle($event)"> Unavailable </mat-chip-option>
+        <mat-chip-option [disabled]="search.length > 2" id="isUnavailable" [value]="isUnavailable" (selectionChange)="onChipToggle($event)"> Unavailable </mat-chip-option>
       </div>
     </div>
   </div>
