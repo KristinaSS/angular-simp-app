@@ -209,11 +209,7 @@ export class HomeComponent implements OnInit {
     } else if ($event.source.id == 'isUnavailable') {
       this.isUnavailable = !this.isUnavailable;
     }
-    if(this.isOwned || this.isLiked || this.isLegacy || this.isEpic || this.isLegendary || this.isMythic || this.isTranscendent || this.isUnavailable){
-      this.disableSearch = true;
-    } else {
-      this.disableSearch = false;
-    }
+    this.disableSearch = this.isOwned || this.isLiked || this.isLegacy || this.isEpic || this.isLegendary || this.isMythic || this.isTranscendent || this.isUnavailable;
 
     this.filterChampions();
   }
