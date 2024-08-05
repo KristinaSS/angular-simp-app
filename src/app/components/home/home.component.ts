@@ -29,10 +29,10 @@ let viewChildren = ViewChildren('tiles');
           transform: 'translateX(-100%)',
           zIndex: -1 // Set z-index here
         }),
-        animate('0.75s ease-in')
+        animate('0.25s ease-in')
       ]),
       transition('* => void', [
-        animate('0.75s ease-out', style({
+        animate('0.25s ease-out', style({
           opacity: 0,
           transform: 'translateX(-100%)',
           zIndex: -1 // Set z-index here

@@ -1,0 +1,19 @@
+<div class="align-content-center justify-content-center position-absolute box-center flex-display">
+  <div *ngIf="isLoading">
+    <app-loader></app-loader>
+  </div>
+</div>
+<div *ngIf="!isLoading">
+  <mat-drawer-container class="example-container">
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+      <p>Auto-resizing sidenav</p>
+    </mat-drawer>
+    <mat-drawer-content>
+      <button style="color: red" type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
+      <app-home></app-home>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
+
