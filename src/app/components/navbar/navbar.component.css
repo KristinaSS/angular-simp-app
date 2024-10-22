@@ -1,0 +1,26 @@
+mat-toolbar {
+  background-color: transparent; /* Transparent background */
+  position: fixed; /* Stay on top while scrolling */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ensure it spans the full width */
+  z-index: 10; /* Ensure it stays above the content */
+  box-shadow: none; /* Remove shadows */
+}
+
+mat-icon {
+  color: #F0E6D2;
+}
+
+.icon-size {
+  font-size: 32px; /* Adjust as needed */
+}
+
+button.mat-icon-button {
+  background: transparent; /* Transparent button background */
+}
+
+/* Add padding to the content below the toolbar */
+mat-drawer-container {
+  padding-top: 64px; /* Adjust this value based on your toolbar height */
+}

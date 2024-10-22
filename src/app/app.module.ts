@@ -24,6 +24,7 @@ import {FormsModule} from "@angular/forms";
 import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material/sidenav";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatNavList} from "@angular/material/list";
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -33,6 +34,7 @@ import {MatNavList} from "@angular/material/list";
     ChampGridComponent,
     LoaderComponent,
     ViewSkinDialogComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
