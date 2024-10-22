@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import {LolService} from "../../services/lol.service";
 
 import {Champion} from "../../models/champion";
@@ -42,35 +42,27 @@ let viewChildren = ViewChildren('tiles');
   ]
 })
 export class HomeComponent implements OnInit {
+  noResults: boolean = false;
   champions: Champion[] = [];
   filteredChampions: Champion[] = [];
+  account: Account | undefined;
+  isLoading: boolean = true;
+  search: string = '';
+  clickedNum: number = 0;
+
   columns: number = 1;
   hoveredIndex: number | null = null;
   hoveredChampion: string = '-1';
-  clickedNum: number = 0;
   totalSkins: number = 0;
-  account: Account | undefined;
   accountSkinsOwned: number = 0;
-  isLoading: boolean = true;
   transitionState: string = '';
   nameFlag: boolean = false;
-  showFiller = false;
 
   // @ts-ignore
   @ViewChild('box', {static: true}) box: ElementRef;
   // @ts-ignore
   @viewChildren tiles: QueryList<ElementRef>;
-  isOwned: boolean = false;
-  isLegacy: boolean = false;
-  isEpic: boolean = false;
-  isLegendary: boolean = false;
-  isMythic: boolean = false;
-  isUnavailable: boolean = false;
-  isLiked: boolean = false;
-  isTranscendent: boolean = false;
-  search: string = '';
-  noResults: boolean = false;
-  disableSearch: boolean = false;
+
 
   constructor(private lolService: LolService,
               private accountService: AccountService,
@@ -157,7 +149,7 @@ export class HomeComponent implements OnInit {
     this.callLiked(skin.skinDetails.isLiked, skin.id);
   }
 
-  openDialog(skin: Skin): void {
+  openSkinDialog(skin: Skin): void {
     const dialogRef = this.dialog.open(ViewSkinDialogComponent, {
       width: '1280 px',
       height: '720 px',
@@ -190,29 +182,6 @@ export class HomeComponent implements OnInit {
       });
       dialogContainer.dispatchEvent(clickEvent);
     }
-  }
-
-  onChipToggle($event: MatChipSelectionChange) {
-    if ($event.source.id == 'isOwned') {
-      this.isOwned = !this.isOwned;
-    } else if ($event.source.id == 'isLiked') {
-      this.isLiked = !this.isLiked;
-    } else if ($event.source.id == 'isLegacy') {
-      this.isLegacy = !this.isLegacy;
-    } else if ($event.source.id == 'isEpic') {
-      this.isEpic = !this.isEpic;
-    } else if ($event.source.id == 'isLegendary') {
-      this.isLegendary = !this.isLegendary;
-    } else if ($event.source.id == 'isMythic') {
-      this.isMythic = !this.isMythic;
-    } else if ($event.source.id == 'isTranscendent') {
-      this.isTranscendent = !this.isTranscendent;
-    } else if ($event.source.id == 'isUnavailable') {
-      this.isUnavailable = !this.isUnavailable;
-    }
-    this.disableSearch = this.isOwned || this.isLiked || this.isLegacy || this.isEpic || this.isLegendary || this.isMythic || this.isTranscendent || this.isUnavailable;
-
-    this.filterChampions();
   }
 
   private setColumns() {
@@ -312,67 +281,6 @@ export class HomeComponent implements OnInit {
           (error) => {
             console.error('Error disowning:', error)
           });
-    }
-  }
-
-  private resetAllChampsToggle() {
-    this.filteredChampions.forEach(champion => {
-      champion.showOtherSkins = false;
-    })
-  }
-
-  private filterChampions() {
-    this.filteredChampions = this.champions;
-    this.resetAllChampsToggle();
-    this.clickedNum = 0;
-    this.filteredChampions = this.champions.map(champion => {
-      return {
-        ...champion,
-        skins: champion.skins.filter(skin => {
-          const isOwnedCondition = !this.isOwned || (skin.isBase || skin.skinDetails?.isOwned);
-          const isLikedCondition = !this.isLiked || (skin.isBase || skin.skinDetails?.isLiked);
-          const isLegacyCondition = !this.isLegacy || (skin.isBase || skin.availability === 'Legacy');
-          const isEpicCondition = !this.isEpic || (skin.isBase || skin.rarity === 'Epic');
-          const isLegendaryCondition = !this.isLegendary || (skin.isBase || skin.rarity === 'Legendary');
-          const isMythicCondition = !this.isMythic || (skin.isBase || skin.rarity === 'Mythic');
-          const isTranscendentCondition = !this.isTranscendent || (skin.isBase || skin.rarity === 'Transcendent');
-          const isUnavailableCondition = !this.isUnavailable || (skin.isBase || (skin.availability === 'Limited' && skin.rarity !== 'Mythic' && skin.rarity !== 'Transcendent'));
-
-          return isOwnedCondition && isLikedCondition && isLegacyCondition && isEpicCondition && isLegendaryCondition && isMythicCondition && isUnavailableCondition && isTranscendentCondition;
-        })
-      };
-    }).filter(champion => champion.skins.length > 1);
-  }
-
-  filteredChampionsBySearch() {
-    this.noResults = false;
-    this.filteredChampions = this.champions;
-    this.resetAllChampsToggle();
-    this.clickedNum = 0;
-
-    if (this.search.length > 2) {
-      this.filteredChampions = this.champions.map(champion => {
-        const filteredSkins = champion.skins.filter(skin =>{
-            if(skin.name.toLowerCase().includes(this.search.toLowerCase())){
-              skin.cols = 3;
-              return true;
-            }
-            return false;
-        }
-        );
-        return { ...champion, skins: filteredSkins };
-      }).filter(champion => {
-        if (champion.skins.length > 0)
-          return true;
-        if (champion.name.toLowerCase().includes(this.search.toLowerCase())) {
-          return true;
-        }
-        return false;
-      });
-
-      if (this.filteredChampions.length === 0) {
-        this.noResults = true;
-      }
     }
   }
 }

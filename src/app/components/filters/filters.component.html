@@ -1,0 +1,62 @@
+<div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display flex-direction_column position-relative top-32-px">
+  <div class="flex-display justify-content-center medium-image align-content-center">
+    <img src="assets/logo-new.png">
+  </div>
+  <div class="title-content align-content-center justify-content-center flex-display flex-direction_column">
+    <div class="flex-display justify-content-center">
+      <mat-form-field>
+        <mat-label>
+          <mat-icon>search</mat-icon>
+          Search
+        </mat-label>
+        <input matInput [disabled]="disableSearch" [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
+      </mat-form-field>
+    </div>
+    <br>
+    <div class="justify-content-center flex-display">
+      <h2>Account: id: {{account?.id}}</h2>
+    </div>
+    <div class="flex-display flex-direction_row justify-content-center padding-all-10px">
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isOwned" [value]="isOwned"
+                         (selectionChange)="onChipToggle($event)"> Owned
+        </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isLiked" [value]="isLiked"
+                         (selectionChange)="onChipToggle($event)"> Liked
+        </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isLegacy" [value]="isLegacy"
+                         (selectionChange)="onChipToggle($event)"> Legacy
+        </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isEpic" [value]="isEpic"
+                         (selectionChange)="onChipToggle($event)"> Epic
+        </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isLegendary" [value]="isLegendary"
+                         (selectionChange)="onChipToggle($event)"> Legendary
+        </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isMythic" [value]="isMythic"
+                         (selectionChange)="onChipToggle($event)"> Mythic
+        </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isTranscendent" [value]="isTranscendent"
+                         (selectionChange)="onChipToggle($event)"> Transcendent
+        </mat-chip-option>
+      </div>
+      <div class="padding-all-5px">
+        <mat-chip-option [disabled]="search.length > 2" id="isUnavailable" [value]="isUnavailable"
+                         (selectionChange)="onChipToggle($event)"> Unavailable
+        </mat-chip-option>
+      </div>
+    </div>
+  </div>
+</div>

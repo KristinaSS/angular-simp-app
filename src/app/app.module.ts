@@ -26,6 +26,7 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {MatListItem, MatNavList} from "@angular/material/list";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BackgroundComponent } from './components/background/background.component';
+import { FiltersComponent } from './components/filters/filters.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -37,6 +38,7 @@ import { BackgroundComponent } from './components/background/background.componen
     ViewSkinDialogComponent,
     NavbarComponent,
     BackgroundComponent,
+    FiltersComponent,
   ],
   imports: [
     BrowserModule,
