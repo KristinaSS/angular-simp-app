@@ -54,6 +54,7 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = true;
   transitionState: string = '';
   nameFlag: boolean = false;
+  showFiller = false;
 
   // @ts-ignore
   @ViewChild('box', {static: true}) box: ElementRef;

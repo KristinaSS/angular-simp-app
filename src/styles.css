@@ -65,3 +65,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .padding-all-5px {
   padding: 5px;
 }
+.full-vh-vw {
+  height: 100vh;
+  width: 100vw;
+}

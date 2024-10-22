@@ -1,111 +1,139 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<div class="background" *ngIf="!isLoading">
-  <img src="assets/bg.jpg">
-  <div class="gradient-overlay"></div>
-</div>
-<div class="align-content-center justify-content-center position-absolute box-center flex-display">
-  <div *ngIf="isLoading">
-    <app-loader></app-loader>
-  </div>
-</div>
-<div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display flex-direction_column">
-  <!-- Hide content while loading -->
-  <div class="flex-display justify-content-center">
-    <img src="assets/wordart.png">
-  </div>
-  <div class="title-content align-content-center justify-content-center flex-display flex-direction_column">
-    <div class="flex-display justify-content-center">
-      <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
+
+<mat-toolbar color="primary" *ngIf="!isLoading">
+  <button mat-icon-button aria-label="Menu icon" (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1 style="color:red;">Responsive Material Sidenavigation</h1>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container full-vh-vw" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <mat-nav-list>
+      <a mat-list-item>
+        <span class="entry">
+          <mat-icon>house</mat-icon>
+          <span>Dashboard</span>
+        </span>
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="background" *ngIf="!isLoading">
+      <img src="assets/bg.jpg">
+      <div class="gradient-overlay"></div>
     </div>
-    <div class="flex-display justify-content-center">
-      <mat-form-field>
-        <mat-label>
-          <mat-icon>search</mat-icon> Search
-        </mat-label>
-        <input matInput [disabled] = "disableSearch" [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
-      </mat-form-field>
-    </div>
-    <br>
-    <div class="justify-content-center flex-display">
-      <h2>Account: id: {{account?.id}}</h2>
-    </div>
-    <div class="flex-display flex-direction_row justify-content-center padding-all-10px">
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isOwned" [value]="isOwned" (selectionChange)="onChipToggle($event)"> Owned </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isLiked" [value]="isLiked" (selectionChange)="onChipToggle($event)"> Liked </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isLegacy" [value]="isLegacy" (selectionChange)="onChipToggle($event)"> Legacy </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isEpic" [value]="isEpic" (selectionChange)="onChipToggle($event)"> Epic </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isLegendary" [value]="isLegendary" (selectionChange)="onChipToggle($event)"> Legendary </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isMythic" [value]="isMythic" (selectionChange)="onChipToggle($event)"> Mythic </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isTranscendent" [value]="isTranscendent" (selectionChange)="onChipToggle($event)"> Transcendent </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 2" id="isUnavailable" [value]="isUnavailable" (selectionChange)="onChipToggle($event)"> Unavailable </mat-chip-option>
+    <div class="align-content-center justify-content-center position-absolute box-center flex-display">
+      <div *ngIf="isLoading"  >
+        <app-loader></app-loader>
       </div>
     </div>
-  </div>
-</div>
-<div class="align-content-center justify-content-center flex-display">
-  <div id="box" #box>
-    <div *ngIf="noResults"> No Results </div>
-    <mat-grid-list [cols]="columns" rowHeight="300px">
-      <ng-container *ngFor="let champion of filteredChampions">
-        <ng-container *ngFor="let skin of champion.skins; let i = index">
-          <div (click)="toggleOtherSkins(champion, i)">
-            <mat-grid-tile #tiles class="mat-grid-tile" [@tileTransition]="transitionState"
-                           *ngIf="(search.length > 2) || ( skin.isBase || champion.showOtherSkins)"
-                           (mouseover)="setHoveredIndex(i, champion.skins, champion.id, champion.name)"
-                           (mouseleave)="setHoveredIndex(null, champion.skins, champion.id, champion.name)"
-                           [colspan]="skin.cols">
-              <div class="skin_tile position-absolute">
-                <img [src]="skin.tilePath" alt="skin_tile"
-                     [class.grayed-out]="search.length < 3 && !champion.showOtherSkins && clickedNum > 0">
-                <div class="icon-container justify-content-center flex-display position-absolute"
-                     *ngIf="skin.cols==3 && !skin.isBase">
-                  <i class="fa-regular fa-eye"
-                     matTooltip="View Skin"
-                     matTooltipPosition="above"
-                     (click)="openDialog(skin)"
-                  ></i>
-                  <i *ngIf="!skin.skinDetails?.isOwned"
-                     class="fa-solid fa-plus"
-                     matTooltip="This skin is not owned"
-                     matTooltipPosition="above"
-                     (click)="toggleOwned(skin, $event)"></i>
-                  <i *ngIf="skin.skinDetails?.isOwned"
-                     class="fa-solid fa-check"
-                     matTooltip="This skin is owned"
-                     matTooltipPosition="above"
-                     (click)="toggleOwned(skin, $event)">
-                  </i>
-                  <i *ngIf="!skin.skinDetails?.isOwned && !skin.skinDetails?.isLiked"
-                     class="fa-regular fa-heart icon"
-                     matTooltip="This skin is not liked"
-                     matTooltipPosition="above"
-                     (click)="toggleLiked(skin, $event)"></i>
-                  <i *ngIf="!skin.skinDetails?.isOwned && skin.skinDetails?.isLiked"
-                     class="fa-solid fa-heart icon"
-                     matTooltip="This skin is liked"
-                     matTooltipPosition="above"
-                     (click)="toggleLiked(skin, $event)"></i>
-                </div>
-              </div>
-            </mat-grid-tile>
+    <div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display flex-direction_column">
+      <!-- Hide content while loading -->
+      <div class="flex-display justify-content-center">
+        <img src="assets/wordart.png">
+      </div>
+      <div class="title-content align-content-center justify-content-center flex-display flex-direction_column">
+        <div class="flex-display justify-content-center">
+          <h1>All Lol skins: {{accountSkinsOwned}}/{{totalSkins}}</h1>
+        </div>
+        <div class="flex-display justify-content-center">
+          <mat-form-field>
+            <mat-label>
+              <mat-icon>search</mat-icon> Search
+            </mat-label>
+            <input matInput [disabled] = "disableSearch" [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
+          </mat-form-field>
+        </div>
+        <br>
+        <div class="justify-content-center flex-display">
+          <h2>Account: id: {{account?.id}}</h2>
+        </div>
+        <div class="flex-display flex-direction_row justify-content-center padding-all-10px">
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isOwned" [value]="isOwned" (selectionChange)="onChipToggle($event)"> Owned </mat-chip-option>
           </div>
-        </ng-container>
-      </ng-container>
-    </mat-grid-list>
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isLiked" [value]="isLiked" (selectionChange)="onChipToggle($event)"> Liked </mat-chip-option>
+          </div>
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isLegacy" [value]="isLegacy" (selectionChange)="onChipToggle($event)"> Legacy </mat-chip-option>
+          </div>
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isEpic" [value]="isEpic" (selectionChange)="onChipToggle($event)"> Epic </mat-chip-option>
+          </div>
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isLegendary" [value]="isLegendary" (selectionChange)="onChipToggle($event)"> Legendary </mat-chip-option>
+          </div>
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isMythic" [value]="isMythic" (selectionChange)="onChipToggle($event)"> Mythic </mat-chip-option>
+          </div>
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isTranscendent" [value]="isTranscendent" (selectionChange)="onChipToggle($event)"> Transcendent </mat-chip-option>
+          </div>
+          <div class="padding-all-5px">
+            <mat-chip-option [disabled]="search.length > 2" id="isUnavailable" [value]="isUnavailable" (selectionChange)="onChipToggle($event)"> Unavailable </mat-chip-option>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="align-content-center justify-content-center flex-display">
+      <div id="box" #box>
+        <div *ngIf="noResults"> No Results </div>
+        <mat-grid-list [cols]="columns" rowHeight="300px">
+          <ng-container *ngFor="let champion of filteredChampions">
+            <ng-container *ngFor="let skin of champion.skins; let i = index">
+              <div (click)="toggleOtherSkins(champion, i)">
+                <mat-grid-tile #tiles class="mat-grid-tile" [@tileTransition]="transitionState"
+                               *ngIf="(search.length > 2) || ( skin.isBase || champion.showOtherSkins)"
+                               (mouseover)="setHoveredIndex(i, champion.skins, champion.id, champion.name)"
+                               (mouseleave)="setHoveredIndex(null, champion.skins, champion.id, champion.name)"
+                               [colspan]="skin.cols">
+                  <div class="skin_tile position-absolute">
+                    <img [src]="skin.tilePath" alt="skin_tile"
+                         [class.grayed-out]="search.length < 3 && !champion.showOtherSkins && clickedNum > 0">
+                    <div class="icon-container justify-content-center flex-display position-absolute"
+                         *ngIf="skin.cols==3 && !skin.isBase">
+                      <i class="fa-regular fa-eye"
+                         matTooltip="View Skin"
+                         matTooltipPosition="above"
+                         (click)="openDialog(skin)"
+                      ></i>
+                      <i *ngIf="!skin.skinDetails?.isOwned"
+                         class="fa-solid fa-plus"
+                         matTooltip="This skin is not owned"
+                         matTooltipPosition="above"
+                         (click)="toggleOwned(skin, $event)"></i>
+                      <i *ngIf="skin.skinDetails?.isOwned"
+                         class="fa-solid fa-check"
+                         matTooltip="This skin is owned"
+                         matTooltipPosition="above"
+                         (click)="toggleOwned(skin, $event)">
+                      </i>
+                      <i *ngIf="!skin.skinDetails?.isOwned && !skin.skinDetails?.isLiked"
+                         class="fa-regular fa-heart icon"
+                         matTooltip="This skin is not liked"
+                         matTooltipPosition="above"
+                         (click)="toggleLiked(skin, $event)"></i>
+                      <i *ngIf="!skin.skinDetails?.isOwned && skin.skinDetails?.isLiked"
+                         class="fa-solid fa-heart icon"
+                         matTooltip="This skin is liked"
+                         matTooltipPosition="above"
+                         (click)="toggleLiked(skin, $event)"></i>
+                    </div>
+                  </div>
+                </mat-grid-tile>
+              </div>
+            </ng-container>
+          </ng-container>
+        </mat-grid-list>
+      </div>
+    </div>
+  </mat-drawer-content>
+  <div class="example-sidenav-content">
+    <button type="button" mat-button >
+      Toggle sidenav
+    </button>
   </div>
-</div>
+</mat-drawer-container>
+

@@ -21,8 +21,9 @@ import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput, MatInputModule} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {FormsModule} from "@angular/forms";
-import { NavbarComponent } from './components/navbar/navbar.component';
 import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material/sidenav";
+import {MatToolbar} from "@angular/material/toolbar";
+import {MatNavList} from "@angular/material/list";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -32,7 +33,6 @@ import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material
     ChampGridComponent,
     LoaderComponent,
     ViewSkinDialogComponent,
-    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +55,9 @@ import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material
     FormsModule,
     MatDrawerContent,
     MatDrawer,
-    MatDrawerContainer
+    MatDrawerContainer,
+    MatToolbar,
+    MatNavList
   ],
   providers: [
     provideAnimationsAsync()
