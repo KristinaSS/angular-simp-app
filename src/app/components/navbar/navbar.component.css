@@ -6,6 +6,12 @@ mat-toolbar {
   width: 100%; /* Ensure it spans the full width */
   z-index: 10; /* Ensure it stays above the content */
   box-shadow: none; /* Remove shadows */
+  display: flex; /* Use flexbox layout */
+  align-items: center; /* Center items vertically */
+}
+
+.spacer {
+  flex: 1; /* This will take up all available space, pushing the Login button to the right */
 }
 
 mat-icon {
@@ -18,6 +24,14 @@ mat-icon {
 
 button.mat-icon-button {
   background: transparent; /* Transparent button background */
+}
+
+/* Optional: You can style the Login button further */
+.login-button {
+  margin-left: auto; /* Ensure it stays on the right */
+  font-size: 24px;
+  color: #F0E6D2 !important;
+  font-weight: bold;
 }
 
 /* Add padding to the content below the toolbar */

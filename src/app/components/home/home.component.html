@@ -1,29 +1,40 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <app-navbar [drawer]="drawer" [isLoading]="isLoading"></app-navbar>
-<mat-drawer-container class="example-container full-vh-vw" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
+<mat-drawer-container class="full-vh-vw" autosize>
+  <mat-drawer #drawer class="sidenav-drawer" mode="side">
     <mat-nav-list>
       <a mat-list-item>
-        <span class="entry">
-          <mat-icon>house</mat-icon>
-          <span>Dashboard</span>
+        <span class="entry flex-display justify-items-end align-content-center hovered">
+          <i class="fa-solid fa-house flex-display justify-content-center align-content-center padding-left-5px"></i>
+          <span class="padding-left-5px">Home</span>
         </span>
       </a>
+      <a mat-list-item>
+        <span class="entry flex-display justify-items-end align-content-center hovered">
+          <i class="fa-solid fa-coins justify-content-center align-content-center padding-left-5px"></i>
+          <span class="padding-left-5px justify-content-center align-content-center">On Sale</span>
+        </span>
+      </a>
+      <a mat-list-item>
+        <span class="entry flex-display justify-items-end align-content-center hovered">
+          <i class="fa-solid fa-list-check justify-content-center align-content-center padding-left-5px"></i>
+          <span class="padding-left-5px">Instructions</span>
+        </span>
+      </a>
+
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
-    <div class="background" *ngIf="!isLoading">
-      <img class="opacity-img" src="assets/bg.jpg">
-      <div class="gradient-overlay"></div>
-    </div>
+    <app-background [isLoading]="isLoading"></app-background>
     <div class="align-content-center justify-content-center position-absolute box-center flex-display">
       <div *ngIf="isLoading">
         <app-loader></app-loader>
       </div>
     </div>
-    <div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display flex-direction_column">
+    <div *ngIf="!isLoading"
+         class="align-content-center justify-content-center flex-display flex-direction_column position-relative top-32-px">
       <!-- Hide content while loading -->
-      <div class="flex-display justify-content-center medium-image align-content-center padding-all-10px">
+      <div class="flex-display justify-content-center medium-image align-content-center">
         <img src="assets/logo-new.png">
       </div>
       <div class="title-content align-content-center justify-content-center flex-display flex-direction_column">
@@ -88,7 +99,7 @@
         </div>
       </div>
     </div>
-    <div class="align-content-center justify-content-center flex-display">
+    <div class="align-content-center justify-content-center flex-display position-relative top-32-px">
       <div id="box" #box>
         <div *ngIf="noResults"> No Results</div>
         <mat-grid-list [cols]="columns" rowHeight="300px">

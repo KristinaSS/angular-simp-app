@@ -1,5 +1,7 @@
-<mat-toolbar color="primary" *ngIf="!isLoading">
+<mat-toolbar color="primary" *ngIf="!isLoading" class="toolbar">
   <button mat-icon-button aria-label="Menu icon" (click)="toggleDrawer()">
     <mat-icon class="icon-size">menu</mat-icon>
   </button>
+  <div class="spacer"></div> <!-- This spacer pushes the Login button to the right -->
+  <button mat-button class="login-button">Login</button> <!-- Using mat-button for consistent styling -->
 </mat-toolbar>

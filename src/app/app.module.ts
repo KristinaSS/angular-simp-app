@@ -23,8 +23,9 @@ import {MatIcon} from "@angular/material/icon";
 import {FormsModule} from "@angular/forms";
 import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material/sidenav";
 import {MatToolbar} from "@angular/material/toolbar";
-import {MatNavList} from "@angular/material/list";
+import {MatListItem, MatNavList} from "@angular/material/list";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { BackgroundComponent } from './components/background/background.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -35,6 +36,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoaderComponent,
     ViewSkinDialogComponent,
     NavbarComponent,
+    BackgroundComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatDrawer,
     MatDrawerContainer,
     MatToolbar,
-    MatNavList
+    MatNavList,
+    MatListItem
   ],
   providers: [
     provideAnimationsAsync()

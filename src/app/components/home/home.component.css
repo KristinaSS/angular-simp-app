@@ -12,6 +12,7 @@
   top: 0;
   height: 600px;
 }
+
 #box {
   max-width: 1500px;
   flex: 1;
@@ -48,38 +49,23 @@
   font-size: 35px;
 }
 
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+.sidenav-drawer {
+  top: 64px;
+  width: 200px;
+  background: rgb(30, 35, 40);
+  background: -moz-linear-gradient(0deg, rgba(30, 35, 40, 1) 0%, rgba(30, 35, 40, 1) 45%, rgba(10, 50, 60, 1) 100%);
+  background: -webkit-linear-gradient(0deg, rgba(30, 35, 40, 1) 0%, rgba(30, 35, 40, 1) 45%, rgba(10, 50, 60, 1) 100%);
+  background: linear-gradient(0deg, rgba(30, 35, 40, 1) 0%, rgba(30, 35, 40, 1) 45%, rgba(10, 50, 60, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1e2328", endColorstr="#0a323c", GradientType=1);
 }
 
-.background img {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0; /* Ensure the image is in front of the gradient */
-  filter: grayscale(100%) opacity(0.1); /* Apply grayscale and opacity */
+.entry {
+  color: #F0E6D2;
 }
 
-.gradient-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(30,35,40);
-  background: -moz-radial-gradient(circle, rgba(30,35,40,1) 0%, rgba(10,50,60,1) 100%);
-  background: -webkit-radial-gradient(circle, rgba(30,35,40,1) 0%, rgba(10,50,60,1) 100%);
-  background: radial-gradient(circle, rgba(30,35,40,1) 0%, rgba(10,50,60,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1e2328",endColorstr="#0a323c",GradientType=1);
-  z-index: -2; /* Ensure the gradient is behind the image */
+.hovered:hover {
+  color: #C89B3C;
+  font-size: 18px;
 }
 
 
