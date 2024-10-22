@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-.flex-display{
+.flex-display {
   display: flex;
 }
 
@@ -23,11 +23,11 @@
   justify-content: center;
 }
 
-.justify-items-center{
+.justify-items-center {
   justify-items: center;
 }
 
-.justify-items-end{
+.justify-items-end {
   justify-items: end;
 }
 
@@ -43,8 +43,18 @@
   position: relative;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.medium-image {
+  height: 200px;
+}
 
 .small-image {
   width: 50px;
@@ -59,12 +69,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .padding-left-5px {
   padding-left: 5px;
 }
+
 .padding-all-10px {
   padding: 10px;
 }
+
 .padding-all-5px {
   padding: 5px;
 }
+
 .full-vh-vw {
   height: 100vh;
   width: 100vw;
