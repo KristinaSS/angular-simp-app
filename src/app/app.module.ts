@@ -27,6 +27,7 @@ import {MatListItem, MatNavList} from "@angular/material/list";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BackgroundComponent } from './components/background/background.component';
 import { FiltersComponent } from './components/filters/filters.component';
+import { ChampionBoxComponent } from './components/champion-box/champion-box.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -39,6 +40,7 @@ import { FiltersComponent } from './components/filters/filters.component';
     NavbarComponent,
     BackgroundComponent,
     FiltersComponent,
+    ChampionBoxComponent,
   ],
   imports: [
     BrowserModule,

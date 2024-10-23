@@ -1,0 +1,52 @@
+<div class="align-content-center justify-content-center flex-display position-relative top-32-px">
+  <div id="box" #box>
+    <div *ngIf="noResults"> No Results</div>
+    <mat-grid-list [cols]="columns" rowHeight="300px">
+      <ng-container *ngFor="let champion of filteredChampions">
+        <ng-container *ngFor="let skin of champion.skins; let i = index">
+          <div (click)="toggleOtherSkins(champion, i)">
+            <mat-grid-tile class="mat-grid-tile" [@tileTransition]="transitionState"
+                           *ngIf="(search.length > 2) || ( skin.isBase || champion.showOtherSkins)"
+                           (mouseover)="setHoveredIndex(i, champion.skins, champion.id, champion.name)"
+                           (mouseleave)="setHoveredIndex(null, champion.skins, champion.id, champion.name)"
+                           [colspan]="skin.cols">
+              <div class="skin_tile position-absolute">
+                <img [src]="skin.tilePath" alt="skin_tile"
+                     [class.grayed-out]="search.length < 3 && !champion.showOtherSkins && clickedNum > 0">
+                <div class="icon-container justify-content-center flex-display position-absolute"
+                     *ngIf="skin.cols==3 && !skin.isBase">
+                  <i class="fa-regular fa-eye"
+                     matTooltip="View Skin"
+                     matTooltipPosition="above"
+                     (click)="openSkinDialog(skin)"
+                  ></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned"
+                     class="fa-solid fa-plus"
+                     matTooltip="This skin is not owned"
+                     matTooltipPosition="above"
+                     (click)="toggleOwned(skin, $event)"></i>
+                  <i *ngIf="skin.skinDetails?.isOwned"
+                     class="fa-solid fa-check"
+                     matTooltip="This skin is owned"
+                     matTooltipPosition="above"
+                     (click)="toggleOwned(skin, $event)">
+                  </i>
+                  <i *ngIf="!skin.skinDetails?.isOwned && !skin.skinDetails?.isLiked"
+                     class="fa-regular fa-heart icon"
+                     matTooltip="This skin is not liked"
+                     matTooltipPosition="above"
+                     (click)="toggleLiked(skin, $event)"></i>
+                  <i *ngIf="!skin.skinDetails?.isOwned && skin.skinDetails?.isLiked"
+                     class="fa-solid fa-heart icon"
+                     matTooltip="This skin is liked"
+                     matTooltipPosition="above"
+                     (click)="toggleLiked(skin, $event)"></i>
+                </div>
+              </div>
+            </mat-grid-tile>
+          </div>
+        </ng-container>
+      </ng-container>
+    </mat-grid-list>
+  </div>
+</div>
