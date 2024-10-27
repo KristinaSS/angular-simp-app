@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {MatChipSelectionChange} from "@angular/material/chips";
-import {Champion} from "../../models/champion";
-import {Account} from "../../models/account";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatChipSelectionChange } from "@angular/material/chips";
+import { Champion } from "../../models/champion";
+import { Account } from "../../models/account";
+import {Skin} from "../../models/skin";
 
 @Component({
   selector: 'app-filters',
@@ -9,136 +10,95 @@ import {Account} from "../../models/account";
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-  @Input() isLoading: boolean = false;  // Input for the isLoading flag
+  @Input() isLoading: boolean = false;
   @Input() champions: Champion[] = [];
   @Input() account: Account | undefined;
 
-  // Two-way binding setup for 'search' property
-  @Input() search: string = '';   // Input for 'search'
-  @Output() searchChange = new EventEmitter<string>();  // Output to emit changes
+  @Input() search: string = '';
+  @Output() searchChange = new EventEmitter<string>();
 
   @Input() filteredChampions: Champion[] = [];
-  @Output() filteredChampionsChange = new EventEmitter<Champion[]>();  // Emit changes
+  @Output() filteredChampionsChange = new EventEmitter<Champion[]>();
 
   @Input() noResults: boolean = false;
-  @Output() noResultsChange = new EventEmitter<boolean>();  // Emit changes
+  @Output() noResultsChange = new EventEmitter<boolean>();
 
   @Input() clickedNum: number = 0;
-  @Output() clickedNumChange = new EventEmitter<number>();  // Emit changes
+  @Output() clickedNumChange = new EventEmitter<number>();
 
   disableSearch: boolean = false;
-  isOwned: boolean = false;
-  isLegacy: boolean = false;
-  isEpic: boolean = false;
-  isLegendary: boolean = false;
-  isMythic: boolean = false;
-  isUnavailable: boolean = false;
-  isLiked: boolean = false;
-  isTranscendent: boolean = false;
+  chips = [
+    { id: 'isOwned', label: 'Owned', value: false },
+    { id: 'isLiked', label: 'Liked', value: false },
+    { id: 'isLegacy', label: 'Legacy', value: false },
+    { id: 'isEpic', label: 'Epic', value: false },
+    { id: 'isLegendary', label: 'Legendary', value: false },
+    { id: 'isMythic', label: 'Mythic', value: false },
+    { id: 'isTranscendent', label: 'Transcendent', value: false },
+    { id: 'isUnavailable', label: 'Unavailable', value: false }
+  ];
 
   onChipToggle($event: MatChipSelectionChange) {
-    this.selectChip($event);
-
-    // Logic for toggling filters
-    this.disableSearch = this.isOwned || this.isLiked || this.isLegacy || this.isEpic || this.isLegendary || this.isMythic || this.isTranscendent || this.isUnavailable;
-    this.filterChampionsByChips();
-
-    // Emit the search change back to the parent
-    this.emitChanges()
+    this.updateChipState($event.source.id, $event.selected);
+    this.disableSearch = this.chips.some(chip => chip.value);
+    this.filterChampions();
+    this.emitChanges();
   }
 
   filteredChampionsBySearch() {
-    this.resetAllChampsToggle();
-
+    this.resetChips();
     if (this.search.length > 2) {
-      this.filteredChampions = this.champions.map(champion => {
-        const filteredSkins = champion.skins.filter(skin => {
-            if (skin.name.toLowerCase().includes(this.search.toLowerCase())) {
-              skin.cols = 3;
-              return true;
-            }
-            return false;
-          }
-        );
-        return {...champion, skins: filteredSkins};
-      }).filter(champion => {
-        if (champion.skins.length > 0) return true;
-        if (champion.name.toLowerCase().includes(this.search.toLowerCase())) return true;
-        return false;
-      });
-
-      if (this.filteredChampions.length === 0) {
-        this.noResults = true;
-      }
+      this.filteredChampions = this.filterChampionsBySearchText();
+      this.noResults = this.filteredChampions.length === 0;
     }
-
-    // Emit the search change back to the parent
     this.searchChange.emit(this.search);
-    this.emitChanges()
+    this.emitChanges();
   }
 
-  private resetAllChampsToggle() {
+  private updateChipState(chipId: string, isSelected: boolean) {
+    const chip = this.chips.find(c => c.id === chipId);
+    if (chip) chip.value = isSelected;
+  }
+
+  private filterChampions() {
+    this.resetChips();
+    this.filteredChampions = this.champions.map(champion => ({
+      ...champion,
+      skins: champion.skins.filter(skin => this.checkSkinConditions(skin))
+    })).filter(champion => champion.skins.length > 1);
+  }
+
+  private filterChampionsBySearchText() {
+    return this.champions.map(champion => ({
+      ...champion,
+      skins: champion.skins.filter(skin =>
+        skin.name.toLowerCase().includes(this.search.toLowerCase())
+      )
+    })).filter(champion => champion.skins.length > 0 || champion.name.toLowerCase().includes(this.search.toLowerCase()));
+  }
+
+  private checkSkinConditions(skin: Skin) {
+    return this.chips.every(chip => !chip.value || this.matchChipCondition(chip.id, skin));
+  }
+
+  private matchChipCondition(chipId: string, skin: Skin) {
+    const conditions: { [key: string]: boolean } = {
+      isOwned: skin.isBase || (skin.skinDetails?.isOwned ?? false),
+      isLiked: skin.isBase || (skin.skinDetails?.isLiked ?? false),
+      isLegacy: skin.isBase || skin.availability === 'Legacy',
+      isEpic: skin.isBase || skin.rarity === 'Epic',
+      isLegendary: skin.isBase || skin.rarity === 'Legendary',
+      isMythic: skin.isBase || skin.rarity === 'Mythic',
+      isTranscendent: skin.isBase || skin.rarity === 'Transcendent',
+      isUnavailable: skin.isBase || (skin.availability === 'Limited' && skin.rarity !== 'Mythic' && skin.rarity !== 'Transcendent')
+    };
+    return conditions[chipId];
+  }
+
+  private resetChips() {
+    this.clickedNum = 0;
     this.noResults = false;
     this.filteredChampions = this.champions;
-    this.clickedNum = 0;
-    this.filteredChampions.forEach(champion => {
-      champion.showOtherSkins = false;
-    });
-  }
-
-  private filterChampionsByChips() {
-    this.resetAllChampsToggle();
-    this.filteredChampions = this.champions.map(champion => {
-      return {
-        ...champion,
-        skins: champion.skins.filter(skin => {
-          const isOwnedCondition = !this.isOwned || (skin.isBase || skin.skinDetails?.isOwned);
-          const isLikedCondition = !this.isLiked || (skin.isBase || skin.skinDetails?.isLiked);
-          const isLegacyCondition = !this.isLegacy || (skin.isBase || skin.availability === 'Legacy');
-          const isEpicCondition = !this.isEpic || (skin.isBase || skin.rarity === 'Epic');
-          const isLegendaryCondition = !this.isLegendary || (skin.isBase || skin.rarity === 'Legendary');
-          const isMythicCondition = !this.isMythic || (skin.isBase || skin.rarity === 'Mythic');
-          const isTranscendentCondition = !this.isTranscendent || (skin.isBase || skin.rarity === 'Transcendent');
-          const isUnavailableCondition = !this.isUnavailable || (skin.isBase || (skin.availability === 'Limited' && skin.rarity !== 'Mythic' && skin.rarity !== 'Transcendent'));
-          return isOwnedCondition && isLikedCondition && isLegacyCondition && isEpicCondition && isLegendaryCondition && isMythicCondition && isUnavailableCondition && isTranscendentCondition;
-        })
-      };
-    }).filter(champion => champion.skins.length > 1);
-  }
-
-  private selectChip($event: MatChipSelectionChange) {
-    const chipId = $event.source.id;
-    const isSelected = $event.selected;
-
-    // Update the state based on chip id
-    switch (chipId) {
-      case 'isOwned':
-        this.isOwned = isSelected;
-        break;
-      case 'isLiked':
-        this.isLiked = isSelected;
-        break;
-      case 'isLegacy':
-        this.isLegacy = isSelected;
-        break;
-      case 'isEpic':
-        this.isEpic = isSelected;
-        break;
-      case 'isLegendary':
-        this.isLegendary = isSelected;
-        break;
-      case 'isMythic':
-        this.isMythic = isSelected;
-        break;
-      case 'isTranscendent':
-        this.isTranscendent = isSelected;
-        break;
-      case 'isUnavailable':
-        this.isUnavailable = isSelected;
-        break;
-      default:
-        break;
-    }
   }
 
   private emitChanges() {

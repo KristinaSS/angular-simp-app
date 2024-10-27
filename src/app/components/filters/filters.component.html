@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display flex-direction_column position-relative top-32-px">
   <div class="flex-display justify-content-center medium-image align-content-center">
-    <img src="assets/logo-new.png">
+    <img src="assets/logo-new.png" alt="Logo">
   </div>
   <div class="title-content align-content-center justify-content-center flex-display flex-direction_column">
     <div class="flex-display justify-content-center">
@@ -17,44 +17,9 @@
       <h2>Account: id: {{account?.id}}</h2>
     </div>
     <div class="flex-display flex-direction_row justify-content-center padding-all-10px">
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isOwned" [value]="isOwned"
-                         (selectionChange)="onChipToggle($event)"> Owned
-        </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isLiked" [value]="isLiked"
-                         (selectionChange)="onChipToggle($event)"> Liked
-        </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isLegacy" [value]="isLegacy"
-                         (selectionChange)="onChipToggle($event)"> Legacy
-        </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isEpic" [value]="isEpic"
-                         (selectionChange)="onChipToggle($event)"> Epic
-        </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isLegendary" [value]="isLegendary"
-                         (selectionChange)="onChipToggle($event)"> Legendary
-        </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isMythic" [value]="isMythic"
-                         (selectionChange)="onChipToggle($event)"> Mythic
-        </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isTranscendent" [value]="isTranscendent"
-                         (selectionChange)="onChipToggle($event)"> Transcendent
-        </mat-chip-option>
-      </div>
-      <div class="padding-all-5px">
-        <mat-chip-option [disabled]="search.length > 0" id="isUnavailable" [value]="isUnavailable"
-                         (selectionChange)="onChipToggle($event)"> Unavailable
+      <div class="padding-all-5px" *ngFor="let chip of chips">
+        <mat-chip-option [disabled]="search.length > 0" [id]="chip.id" [value]="chip.value" (selectionChange)="onChipToggle($event)">
+          {{ chip.label }}
         </mat-chip-option>
       </div>
     </div>
