@@ -1,0 +1,10 @@
+<div class="flex-display justify-content-center">
+  <mat-form-field>
+    <mat-label>
+      <mat-icon>search</mat-icon>
+      Search
+    </mat-label>
+    <input matInput [disabled]="disableSearch" [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
+  </mat-form-field>
+</div>
+<br>

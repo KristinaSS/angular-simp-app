@@ -1,4 +1,15 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, QueryList, Renderer2, ViewChild, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  QueryList,
+  Renderer2,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Skin} from "../../models/skin";
 import {SkinDetails} from "../../models/skin-details";
@@ -152,6 +163,20 @@ export class ChampionBoxComponent implements AfterViewInit {
     this.clickedNumChange.emit(this.clickedNum);
   }
 
+  resetCols(tiles: Skin[], champName: string) {
+    tiles.forEach(skin => {
+      if (skin.isBase) {
+        skin.cols = 3;
+      } else {
+        skin.cols = 1;
+        skin.skinDetails = this.getSkinDetails(skin);
+        if (!this.nameFlag) {
+          skin.name = skin.name + " " + champName;
+        }
+      }
+      skin.isLastColumn = false;
+    });
+  }
 
   toggleOwned(skin: Skin, event: MouseEvent) {
     if (skin.skinDetails != undefined) {
@@ -201,21 +226,6 @@ export class ChampionBoxComponent implements AfterViewInit {
             console.error('Error disowning:', error)
           });
     }
-  }
-
-  resetCols(tiles: Skin[], champName: string) {
-    tiles.forEach(skin => {
-      if (skin.isBase) {
-        skin.cols = 3;
-      } else {
-        skin.cols = 1;
-        skin.skinDetails = this.getSkinDetails(skin);
-        if (!this.nameFlag) {
-          skin.name = skin.name + " " + champName;
-        }
-      }
-      skin.isLastColumn = false;
-    });
   }
 
   private getSkinDetails(s: Skin): SkinDetails | undefined {

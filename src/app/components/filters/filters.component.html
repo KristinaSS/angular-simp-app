@@ -1,24 +1,25 @@
-<div *ngIf="!isLoading" class="align-content-center justify-content-center flex-display flex-direction_column position-relative top-32-px">
+<div *ngIf="!isLoading"
+     class="align-content-center justify-content-center flex-display flex-direction_column position-relative top-32-px">
   <div class="flex-display justify-content-center medium-image align-content-center">
     <img src="assets/logo-new.png" alt="Logo">
   </div>
   <div class="title-content align-content-center justify-content-center flex-display flex-direction_column">
-    <div class="flex-display justify-content-center">
-      <mat-form-field>
-        <mat-label>
-          <mat-icon>search</mat-icon>
-          Search
-        </mat-label>
-        <input matInput [disabled]="disableSearch" [(ngModel)]="search" (ngModelChange)="filteredChampionsBySearch()">
-      </mat-form-field>
-    </div>
-    <br>
+    <app-search-input
+      [champions]="champions"
+      [disableSearch]="disableSearch"
+      (filteredChampionsChange)="setFilteredChamps($event)"
+      (noResultsChange)="setNoResults($event)"
+      (clickedNumChange)="setClickedNum($event)"
+      (searchChange)="setSearch($event)"
+    >
+    </app-search-input>
     <div class="justify-content-center flex-display">
       <h2>Account: id: {{account?.id}}</h2>
     </div>
     <div class="flex-display flex-direction_row justify-content-center padding-all-10px">
       <div class="padding-all-5px" *ngFor="let chip of chips">
-        <mat-chip-option [disabled]="search.length > 0" [id]="chip.id" [value]="chip.value" (selectionChange)="onChipToggle($event)">
+        <mat-chip-option [disabled]="search.length > 0" [id]="chip.id" [value]="chip.value"
+                         (selectionChange)="onChipToggle($event)">
           {{ chip.label }}
         </mat-chip-option>
       </div>

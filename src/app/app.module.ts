@@ -28,6 +28,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { BackgroundComponent } from './components/background/background.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ChampionBoxComponent } from './components/champion-box/champion-box.component';
+import { SearchInputComponent } from './components/search-input/search-input.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -41,6 +42,7 @@ import { ChampionBoxComponent } from './components/champion-box/champion-box.com
     BackgroundComponent,
     FiltersComponent,
     ChampionBoxComponent,
+    SearchInputComponent,
   ],
   imports: [
     BrowserModule,
