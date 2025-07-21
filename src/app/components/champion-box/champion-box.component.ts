@@ -22,17 +22,21 @@ import { AccountService } from '../../services/account.service';
 @Component({
   selector: 'app-champion-box',
   templateUrl: './champion-box.component.html',
-  styleUrls: ['./champion-box.component.css'], // ✅ FIXED
+  styleUrls: ['./champion-box.component.css'],
   animations: [
-    trigger('tileTransition', [
-      state('in', style({ opacity: 0, transform: 'translate(0)' })),
-      transition('void => *', [
-        style({ opacity: 0, transform: 'translateX(-100%)', zIndex: -1 }),
-        animate('0.25s ease-in')
+    trigger('zoomFade', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.9)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
       ]),
-      transition('* => void', [
-        animate('0.25s ease-out', style({ opacity: 0, transform: 'translateX(-100%)', zIndex: -1 }))
+      transition(':leave', [
+        animate('200ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' }))
       ])
+    ]),
+    trigger('tileHover', [
+      state('hovered', style({ transform: 'scale(1.05)', zIndex: 2 })),
+      state('default', style({ transform: 'scale(1)', zIndex: 1 })),
+      transition('default <=> hovered', animate('150ms ease-in-out'))
     ])
   ]
 })

@@ -8,12 +8,12 @@
           <div (click)="toggleOtherSkins(champion, i)">
             <mat-grid-tile
               #tiles
-              class="mat-grid-tile"
-              [@tileTransition]="transitionState"
-              *ngIf="search.length > 2 || skin.isBase || champion.showOtherSkins"
+              *ngIf="(search.length > 2) || (skin.isBase || champion.showOtherSkins)"
+              [@zoomFade]
+              [@tileHover]="hoveredIndex === i && hoveredChampion === champion.id ? 'hovered' : 'default'"
+              [colspan]="skin.cols"
               (mouseover)="setHoveredIndex(i, champion.skins, champion.id, champion.name)"
               (mouseleave)="setHoveredIndex(null, champion.skins, champion.id, champion.name)"
-              [colspan]="skin.cols"
             >
               <div class="skin_tile position-absolute">
                 <img
