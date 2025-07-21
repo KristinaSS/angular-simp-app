@@ -1,15 +1,15 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'] // ✅ fixed this!
 })
 export class NavbarComponent {
-  @Input() drawer: any;  // Input for the drawer reference
-  @Input() isLoading: boolean = false;  // Input for the isLoading flag
+  @Input() drawer: any;
+  @Input() isLoading = false;
 
   toggleDrawer() {
-    this.drawer.toggle();  // Method to toggle the drawer
+    this.drawer?.toggle();
   }
 }

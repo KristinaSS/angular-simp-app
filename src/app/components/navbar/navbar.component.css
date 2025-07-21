@@ -1,17 +1,17 @@
 mat-toolbar {
-  background-color: transparent; /* Transparent background */
-  position: fixed; /* Stay on top while scrolling */
+  background-color: transparent;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* Ensure it spans the full width */
-  z-index: 10; /* Ensure it stays above the content */
-  box-shadow: none; /* Remove shadows */
-  display: flex; /* Use flexbox layout */
-  align-items: center; /* Center items vertically */
+  width: 100%;
+  z-index: 10;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
 }
 
 .spacer {
-  flex: 1; /* This will take up all available space, pushing the Login button to the right */
+  flex: 1;
 }
 
 mat-icon {
@@ -19,22 +19,21 @@ mat-icon {
 }
 
 .icon-size {
-  font-size: 32px; /* Adjust as needed */
+  font-size: 32px;
 }
 
 button.mat-icon-button {
-  background: transparent; /* Transparent button background */
+  background: transparent;
 }
 
-/* Optional: You can style the Login button further */
 .login-button {
-  margin-left: auto; /* Ensure it stays on the right */
+  margin-left: auto;
   font-size: 24px;
   color: #F0E6D2 !important;
   font-weight: bold;
 }
 
-/* Add padding to the content below the toolbar */
+/* Move content down so it doesn't hide behind the fixed navbar */
 mat-drawer-container {
-  padding-top: 64px; /* Adjust this value based on your toolbar height */
+  padding-top: 64px;
 }
