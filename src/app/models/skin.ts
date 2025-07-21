@@ -1,5 +1,5 @@
-import {Chroma} from "./chroma";
-import {SkinDetails} from "./skin-details";
+import { Chroma } from './chroma';
+import { SkinDetails } from './skin-details';
 
 export interface Skin {
   id: string;
@@ -19,8 +19,11 @@ export interface Skin {
   loadScreenPath: string;
   loadScreenVintagePath: string;
   cols: number;
+
+  // Optional view/UI-specific flags
   isLastColumn?: boolean;
   show?: boolean;
 
+  // Account-specific metadata (optional)
   skinDetails?: SkinDetails;
 }

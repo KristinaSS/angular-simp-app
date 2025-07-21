@@ -1,41 +1,45 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {HomeComponent} from './components/home/home.component';
-import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatButtonModule} from "@angular/material/button";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { ChampGridComponent } from './components/champ-grid/champ-grid.component';
+// Routing
+import { AppRoutingModule } from './app-routing.module';
+
+// Components
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
 import { LoaderComponent } from './components/loader/loader.component';
-import {TooltipModule} from "ngx-bootstrap/tooltip";
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ViewSkinDialogComponent } from './components/view-skin-dialog/view-skin-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatChipOption} from "@angular/material/chips";
-import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
-import {MatInput, MatInputModule} from "@angular/material/input";
-import {MatIcon} from "@angular/material/icon";
-import {FormsModule} from "@angular/forms";
-import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material/sidenav";
-import {MatToolbar} from "@angular/material/toolbar";
-import {MatListItem, MatNavList} from "@angular/material/list";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BackgroundComponent } from './components/background/background.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ChampionBoxComponent } from './components/champion-box/champion-box.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
 
+// Angular Material Modules
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
+
+// Third-party Modules
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 @NgModule({
-  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     HomeComponent,
-    ChampGridComponent,
     LoaderComponent,
     ViewSkinDialogComponent,
     NavbarComponent,
@@ -46,33 +50,28 @@ import { SearchInputComponent } from './components/search-input/search-input.com
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    FormsModule,
+    // Material
     MatGridListModule,
     MatButtonModule,
     MatCheckboxModule,
-    BrowserAnimationsModule,
-    TooltipModule.forRoot(),
     MatTooltipModule,
     MatDialogModule,
-    MatChipOption,
-    MatFormField,
-    MatInput,
     MatFormFieldModule,
     MatInputModule,
-    MatIcon,
-    FormsModule,
-    MatDrawerContent,
-    MatDrawer,
-    MatDrawerContainer,
-    MatToolbar,
-    MatNavList,
-    MatListItem
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
+    MatChipsModule,
+    // Third-party
+    TooltipModule.forRoot()
   ],
-  providers: [
-    provideAnimationsAsync()
-  ]
+  providers: [provideAnimationsAsync()],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

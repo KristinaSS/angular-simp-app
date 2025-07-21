@@ -2,3 +2,13 @@
   max-width: 1500px;
   flex: 1;
 }
+
+.zoom-wrapper {
+  transition: transform 0.3s ease;
+}
+
+.mat-grid-tile:hover .zoom-wrapper {
+  transform: scale(1.05); /* Smooth zoom */
+}
+
+

@@ -1,105 +1,69 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+/>
+
 <app-navbar [drawer]="drawer" [isLoading]="isLoading"></app-navbar>
+
 <mat-drawer-container class="full-vh-vw" autosize>
   <mat-drawer #drawer class="sidenav-drawer" mode="side">
     <mat-nav-list>
       <a mat-list-item>
-        <span class="entry flex-display justify-items-end align-content-center hovered">
-          <i class="fa-solid fa-house flex-display justify-content-center align-content-center padding-left-5px"></i>
+        <span class="entry hovered">
+          <i class="fa-solid fa-house padding-left-5px"></i>
           <span class="padding-left-5px">Home</span>
         </span>
       </a>
       <a mat-list-item>
-        <span class="entry flex-display justify-items-end align-content-center hovered">
-          <i class="fa-solid fa-coins justify-content-center align-content-center padding-left-5px"></i>
-          <span class="padding-left-5px justify-content-center align-content-center">On Sale</span>
+        <span class="entry hovered">
+          <i class="fa-solid fa-coins padding-left-5px"></i>
+          <span class="padding-left-5px">On Sale</span>
         </span>
       </a>
       <a mat-list-item>
-        <span class="entry flex-display justify-items-end align-content-center hovered">
-          <i class="fa-solid fa-list-check justify-content-center align-content-center padding-left-5px"></i>
+        <span class="entry hovered">
+          <i class="fa-solid fa-list-check padding-left-5px"></i>
           <span class="padding-left-5px">Instructions</span>
         </span>
       </a>
       <a mat-list-item>
-        <span class="entry flex-display justify-items-end align-content-center hovered">
-         <i class="fa-solid fa-gamepad justify-content-center align-content-center padding-left-5px"></i>
+        <span class="entry hovered">
+          <i class="fa-solid fa-gamepad padding-left-5px"></i>
           <span class="padding-left-5px">Game</span>
         </span>
       </a>
     </mat-nav-list>
   </mat-drawer>
+
   <mat-drawer-content>
-    <app-background [isLoading]="isLoading"></app-background>
-    <div class="align-content-center justify-content-center position-absolute box-center flex-display">
-      <div *ngIf="isLoading">
-        <app-loader></app-loader>
-      </div>
-    </div>
-    <app-filters
-      (searchChange)="updateSearch($event)"
-      (filteredChampionsChange)="updateFilteredChamps($event)"
-      [(noResults)]="noResults"
-      [isLoading]="isLoading"
-      [champions]="champions"
-      [account]="account">
-    </app-filters>
-    <div class="align-content-center justify-content-center flex-display position-relative top-32-px">
-      <div id="box" #box>
-        <div *ngIf="noResults"> No Results</div>
-        <mat-grid-list [cols]="columns" rowHeight="300px">
-          <ng-container *ngFor="let champion of filteredChampions">
-            <ng-container *ngFor="let skin of champion.skins; let i = index">
-              <div (click)="toggleOtherSkins(champion, i)">
-                <mat-grid-tile class="mat-grid-tile" [@tileTransition]="transitionState"
-                               *ngIf="(search.length > 2) || ( skin.isBase || champion.showOtherSkins)"
-                               (mouseover)="setHoveredIndex(i, champion.skins, champion.id, champion.name)"
-                               (mouseleave)="setHoveredIndex(null, champion.skins, champion.id, champion.name)"
-                               [colspan]="skin.cols">
-                  <div class="skin_tile position-absolute">
-                    <img [src]="skin.tilePath" alt="skin_tile"
-                         [class.grayed-out]="search.length < 3 && !champion.showOtherSkins && clickedNum > 0">
-                    <div class="icon-container justify-content-center flex-display position-absolute"
-                         *ngIf="skin.cols==3 && !skin.isBase">
-                      <i class="fa-regular fa-eye"
-                         matTooltip="View Skin"
-                         matTooltipPosition="above"
-                         (click)="openSkinDialog(skin)"
-                      ></i>
-                      <i *ngIf="!skin.skinDetails?.isOwned"
-                         class="fa-solid fa-plus"
-                         matTooltip="This skin is not owned"
-                         matTooltipPosition="above"
-                         (click)="toggleOwned(skin, $event)"></i>
-                      <i *ngIf="skin.skinDetails?.isOwned"
-                         class="fa-solid fa-check"
-                         matTooltip="This skin is owned"
-                         matTooltipPosition="above"
-                         (click)="toggleOwned(skin, $event)">
-                      </i>
-                      <i *ngIf="!skin.skinDetails?.isOwned && !skin.skinDetails?.isLiked"
-                         class="fa-regular fa-heart icon"
-                         matTooltip="This skin is not liked"
-                         matTooltipPosition="above"
-                         (click)="toggleLiked(skin, $event)"></i>
-                      <i *ngIf="!skin.skinDetails?.isOwned && skin.skinDetails?.isLiked"
-                         class="fa-solid fa-heart icon"
-                         matTooltip="This skin is liked"
-                         matTooltipPosition="above"
-                         (click)="toggleLiked(skin, $event)"></i>
-                    </div>
-                  </div>
-                </mat-grid-tile>
-              </div>
-            </ng-container>
-          </ng-container>
-        </mat-grid-list>
-      </div>
+    <!-- this outer div is used for layout measuring -->
+    <div #box style="width: 100%">
+      <app-background [isLoading]="isLoading"></app-background>
+
+      <app-loader
+        *ngIf="isLoading"
+        class="box-center flex-display align-content-center justify-content-center position-absolute"
+      ></app-loader>
+
+      <app-filters
+        [(search)]="search"
+        [(filteredChampions)]="filteredChampions"
+        [(noResults)]="noResults"
+        [isLoading]="isLoading"
+        [champions]="champions"
+        [account]="account"
+        [clickedNum]="clickedNum"
+      ></app-filters>
+
+      <app-champion-box
+        [nameFlag]="nameFlag"
+        [account]="account"
+        [(clickedNum)]="clickedNum"
+        [(columns)]="columns"
+        [(accountSkinsOwned)]="accountSkinsOwned"
+        [filteredChampions]="filteredChampions"
+        [noResults]="noResults"
+      ></app-champion-box>
     </div>
   </mat-drawer-content>
-  <div class="example-sidenav-content">
-    <button type="button" mat-button>
-      Toggle sidenav
-    </button>
-  </div>
 </mat-drawer-container>
